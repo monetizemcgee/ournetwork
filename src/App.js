@@ -1,104 +1,85 @@
 import React, { useState } from 'react';
-import './App.css';
 
 const App = () => {
   const [currentScreen, setCurrentScreen] = useState('onboarding');
   const [user, setUser] = useState({ name: 'Jordan' });
   const [selectedShelter, setSelectedShelter] = useState(null);
 
-  // Navigation function
   const navigateTo = (screen) => {
     setCurrentScreen(screen);
   };
 
-  // Icons as simple SVG components
+  // Icons as SVG components
   const HomeIcon = () => (
-    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+    <svg style={{ width: '24px', height: '24px' }} fill="currentColor" viewBox="0 0 24 24">
       <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
     </svg>
   );
 
   const MapIcon = () => (
-    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+    <svg style={{ width: '24px', height: '24px' }} fill="currentColor" viewBox="0 0 24 24">
       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
     </svg>
   );
 
   const ChatIcon = () => (
-    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+    <svg style={{ width: '24px', height: '24px' }} fill="currentColor" viewBox="0 0 24 24">
       <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
     </svg>
   );
 
   const FileIcon = () => (
-    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+    <svg style={{ width: '24px', height: '24px' }} fill="currentColor" viewBox="0 0 24 24">
       <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
     </svg>
   );
 
   const ChevronLeftIcon = () => (
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+    <svg style={{ width: '20px', height: '20px' }} fill="currentColor" viewBox="0 0 24 24">
       <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
     </svg>
   );
 
-  const BellIcon = () => (
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
-    </svg>
-  );
-
-  const UserIcon = () => (
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-    </svg>
-  );
-
-  const SendIcon = () => (
-    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-    </svg>
-  );
-
-  const SearchIcon = () => (
-    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-    </svg>
-  );
-
-  const FilterIcon = () => (
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/>
-    </svg>
-  );
-
-  const PlusIcon = () => (
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-    </svg>
-  );
-
   const PhoneIcon = () => (
-    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+    <svg style={{ width: '16px', height: '16px' }} fill="currentColor" viewBox="0 0 24 24">
       <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
     </svg>
   );
 
-  const ShieldIcon = () => (
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/>
-    </svg>
-  );
-
-  const ClockIcon = () => (
-    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+  const SearchIcon = () => (
+    <svg style={{ width: '16px', height: '16px' }} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
     </svg>
   );
 
   const WeatherIcon = () => (
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+    <svg style={{ width: '20px', height: '20px' }} fill="currentColor" viewBox="0 0 24 24">
       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+    </svg>
+  );
+
+  const ClockIcon = () => (
+    <svg style={{ width: '16px', height: '16px' }} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+      <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+    </svg>
+  );
+
+  const UserIcon = () => (
+    <svg style={{ width: '20px', height: '20px' }} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+    </svg>
+  );
+
+  const FilterIcon = () => (
+    <svg style={{ width: '20px', height: '20px' }} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/>
+    </svg>
+  );
+
+  const ShieldIcon = () => (
+    <svg style={{ width: '20px', height: '20px' }} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/>
     </svg>
   );
 
@@ -119,7 +100,7 @@ const App = () => {
     },
     {
       id: 2,
-      name: "LA Family Housing - North Hollywood",
+      name: "LA Family Housing",
       type: "Bridge Housing",
       address: "7843 Lankershim Blvd, North Hollywood",
       phone: "(818) 982-4091",
@@ -142,60 +123,18 @@ const App = () => {
       availability: "Space available",
       hours: "24/7",
       requirements: "18-24 years old"
-    },
-    {
-      id: 4,
-      name: "Volunteers of America - Glendale",
-      type: "Family Shelter",
-      address: "Glendale Area",
-      phone: "(818) 246-5586",
-      distance: "5.7 mi",
-      beds: "45 units",
-      services: ["Family Support", "Childcare", "Case Management", "School Enrollment"],
-      availability: "Call 211",
-      hours: "24/7",
-      requirements: "Families with children"
-    },
-    {
-      id: 5,
-      name: "Special Service for Groups",
-      type: "Transitional Housing",
-      address: "Multiple Locations",
-      phone: "(213) 553-1818",
-      distance: "Varies",
-      beds: "200+",
-      services: ["Long-term Housing", "Mental Health", "Substance Abuse", "Life Skills"],
-      availability: "Waitlist",
-      hours: "Office: 9-5",
-      requirements: "Assessment required"
-    }
-  ];
-
-  // Emergency services
-  const emergencyServices = [
-    {
-      name: "Emergency Response (Weather)",
-      description: "Hotel vouchers during severe weather",
-      contact: "Call 211",
-      active: true
-    },
-    {
-      name: "LA-HOP Outreach",
-      description: "Request homeless outreach services",
-      contact: "la-hop.org",
-      active: true
-    },
-    {
-      name: "Winter Shelter Program",
-      description: "24/7 shelters during cold months",
-      contact: "Call 211 for locations",
-      active: true
     }
   ];
 
   // Bottom Navigation Component
   const BottomNav = ({ activeScreen }) => (
-    <div style={{ backgroundColor: 'white', borderTop: '2px solid black', padding: '24px', display: 'flex', justifyContent: 'space-around' }}>
+    <div style={{ 
+      backgroundColor: 'white', 
+      borderTop: '2px solid black', 
+      padding: '24px', 
+      display: 'flex', 
+      justifyContent: 'space-around' 
+    }}>
       <button 
         onClick={() => navigateTo('dashboard')}
         style={{ 
@@ -286,7 +225,8 @@ const App = () => {
           justifyContent: 'center', 
           marginBottom: '24px', 
           border: '1px solid rgba(255, 255, 255, 0.2)',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          color: 'white'
         }}>
           <HomeIcon />
         </div>
@@ -314,7 +254,8 @@ const App = () => {
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center', 
-              marginRight: '16px' 
+              marginRight: '16px',
+              color: 'white'
             }}>
               <HomeIcon />
             </div>
@@ -342,7 +283,8 @@ const App = () => {
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center', 
-              marginRight: '16px' 
+              marginRight: '16px',
+              color: 'white'
             }}>
               <PhoneIcon />
             </div>
@@ -370,7 +312,8 @@ const App = () => {
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center', 
-              marginRight: '16px' 
+              marginRight: '16px',
+              color: 'white'
             }}>
               <WeatherIcon />
             </div>
@@ -398,8 +341,6 @@ const App = () => {
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             transition: 'all 0.3s ease'
           }}
-          onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-          onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
         >
           Find Shelter Now
         </button>
@@ -417,7 +358,8 @@ const App = () => {
             textDecoration: 'none',
             display: 'block',
             textAlign: 'center',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            boxSizing: 'border-box'
           }}
         >
           Call 211 for Help
@@ -445,252 +387,40 @@ const App = () => {
             alignItems: 'center', 
             justifyContent: 'center', 
             border: 'none',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            color: 'white'
           }}>
             <SearchIcon />
           </button>
         </div>
       </div>
 
-      <div style={{ flex: 1, padding: '24px', backgroundColor: '#f5f5f5' }}>
-        <h2 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', marginBottom: '16px' }}>Quick Links</h2>
-        
-        <div style={{ display: 'grid', gap: '12px', marginBottom: '24px' }}>
-          <a 
-            href="https://www.lahsa.org/portal/apps/find-a-shelter/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              backgroundColor: 'white', 
-              padding: '16px', 
-              borderRadius: '16px', 
-              border: '2px solid black',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ 
-                width: '40px', 
-                height: '40px', 
-                backgroundColor: '#ef4444', 
-                borderRadius: '12px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center' 
-              }}>
-                <HomeIcon />
-              </div>
-              <div>
-                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>LAHSA Shelter Finder</p>
-                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Official shelter search tool</p>
-              </div>
-            </div>
-            <ChevronLeftIcon />
-          </a>
-
-          <a 
-            href="https://www.lahsa.org/documents?id=2196-lahsa-shelter-list.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              backgroundColor: 'white', 
-              padding: '16px', 
-              borderRadius: '16px', 
-              border: '2px solid black',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ 
-                width: '40px', 
-                height: '40px', 
-                backgroundColor: '#3b82f6', 
-                borderRadius: '12px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center' 
-              }}>
-                <FileIcon />
-              </div>
-              <div>
-                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Shelter Directory PDF</p>
-                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Complete list for offline use</p>
-              </div>
-            </div>
-            <ChevronLeftIcon />
-          </a>
-
-          <a 
-            href="https://www.lahsa.org/winter-shelter"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              backgroundColor: 'white', 
-              padding: '16px', 
-              borderRadius: '16px', 
-              border: '2px solid black',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ 
-                width: '40px', 
-                height: '40px', 
-                backgroundColor: '#8b5cf6', 
-                borderRadius: '12px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center' 
-              }}>
-                <WeatherIcon />
-              </div>
-              <div>
-                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Winter Shelter Program</p>
-                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Seasonal emergency housing</p>
-              </div>
-            </div>
-            <ChevronLeftIcon />
-          </a>
-        </div>
-
-        <h2 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', marginBottom: '16px' }}>Housing Programs</h2>
-        
-        <div style={{ display: 'grid', gap: '12px' }}>
-          <div style={{ backgroundColor: 'white', borderRadius: '16px', padding: '16px', border: '1px solid #d1d5db' }}>
-            <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: '0 0 8px 0' }}>Emergency Response Program</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px 0' }}>
-              Activated during severe weather or emergencies. Provides hotel/motel vouchers to unsheltered individuals.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px', fontWeight: 'bold' }}>ACTIVE</span>
-              <span style={{ color: '#6b7280', fontSize: '12px' }}>Call 211 for vouchers</span>
-            </div>
-          </div>
-
-          <div style={{ backgroundColor: 'white', borderRadius: '16px', padding: '16px', border: '1px solid #d1d5db' }}>
-            <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: '0 0 8px 0' }}>Bridge Housing</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px 0' }}>
-              Temporary housing with supportive services while waiting for permanent housing placement.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: '#6b7280', fontSize: '12px' }}>Referral required from CES</span>
-            </div>
-          </div>
-
-          <div style={{ backgroundColor: 'white', borderRadius: '16px', padding: '16px', border: '1px solid #d1d5db' }}>
-            <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: '0 0 8px 0' }}>Transitional Housing</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px 0' }}>
-              6-24 month programs with case management, job training, and life skills support.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: '#6b7280', fontSize: '12px' }}>Assessment required</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <BottomNav activeScreen="documents" />
-    </div>
-  );
-
-  // Main render logic
-  const renderScreen = () => {
-    switch (currentScreen) {
-      case 'onboarding':
-        return <OnboardingScreen />;
-      case 'dashboard':
-        return <DashboardScreen />;
-      case 'map':
-        return <MapScreen />;
-      case 'chat':
-        return <ChatScreen />;
-      case 'documents':
-        return <DocumentsScreen />;
-      case 'shelter-detail':
-        return <ShelterDetailScreen />;
-      default:
-        return <OnboardingScreen />;
-    }
-  };
-
-  return (
-    <div style={{ maxWidth: '448px', margin: '0 auto', backgroundColor: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
-      {renderScreen()}
-    </div>
-  );
-};
-
-export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and support</p>
-          </div>
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <button style={{ 
-              width: '40px', 
-              height: '40px', 
-              backgroundColor: 'rgba(255, 255, 255, 0.1)', 
-              backdropFilter: 'blur(4px)', 
-              borderRadius: '50%', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              cursor: 'pointer'
-            }}>
-              <BellIcon />
-            </button>
-            <button style={{ 
-              width: '40px', 
-              height: '40px', 
-              backgroundColor: 'rgba(255, 255, 255, 0.1)', 
-              backdropFilter: 'blur(4px)', 
-              borderRadius: '50%', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              cursor: 'pointer'
-            }}>
-              <UserIcon />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Emergency Alert Banner */}
-      {emergencyServices.filter(s => s.active).length > 0 && (
-        <div style={{ margin: '0 24px', marginTop: '-12px', backgroundColor: '#ef4444', borderRadius: '16px', padding: '16px', border: '1px solid #dc2626' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <div style={{ margin: '0 24px', marginTop: '-12px', backgroundColor: '#ef4444', borderRadius: '16px', padding: '16px', border: '1px solid #dc2626' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ color: 'white' }}>
             <WeatherIcon />
-            <div style={{ flex: 1 }}>
-              <p style={{ color: 'white', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Emergency Shelter Active</p>
-              <p style={{ color: 'white', opacity: 0.9, fontSize: '12px', margin: 0 }}>Hotel vouchers available - Call 211</p>
-            </div>
-            <a 
-              href="tel:211"
-              style={{ 
-                backgroundColor: 'white', 
-                color: '#ef4444', 
-                padding: '8px 16px', 
-                borderRadius: '12px', 
-                fontWeight: 'bold', 
-                fontSize: '14px', 
-                border: 'none',
-                textDecoration: 'none'
-              }}
-            >
-              Call Now
-            </a>
           </div>
+          <div style={{ flex: 1 }}>
+            <p style={{ color: 'white', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Emergency Shelter Active</p>
+            <p style={{ color: 'white', opacity: 0.9, fontSize: '12px', margin: 0 }}>Hotel vouchers available - Call 211</p>
+          </div>
+          <a 
+            href="tel:211"
+            style={{ 
+              backgroundColor: 'white', 
+              color: '#ef4444', 
+              padding: '8px 16px', 
+              borderRadius: '12px', 
+              fontWeight: 'bold', 
+              fontSize: '14px', 
+              border: 'none',
+              textDecoration: 'none'
+            }}
+          >
+            Call Now
+          </a>
         </div>
-      )}
+      </div>
 
       <div style={{ padding: '24px', background: 'linear-gradient(to bottom, transparent, white)' }}>
         <h2 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', marginBottom: '16px' }}>Quick Access</h2>
@@ -706,8 +436,6 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
               cursor: 'pointer',
               transition: 'transform 0.2s ease'
             }}
-            onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
               <HomeIcon />
@@ -730,8 +458,6 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
               textDecoration: 'none',
               display: 'block'
             }}
-            onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
               <PhoneIcon />
@@ -755,8 +481,6 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
               cursor: 'pointer',
               transition: 'transform 0.2s ease'
             }}
-            onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
               <UserIcon />
@@ -781,8 +505,6 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
               textDecoration: 'none',
               display: 'block'
             }}
-            onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
               <MapIcon />
@@ -863,7 +585,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                     borderRadius: '50%', 
                     alignItems: 'center', 
                     justifyContent: 'center',
-                    textDecoration: 'none'
+                    textDecoration: 'none',
+                    color: 'white'
                   }}
                 >
                   <PhoneIcon />
@@ -898,7 +621,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                 alignItems: 'center', 
                 justifyContent: 'center', 
                 border: '1px solid rgba(255, 255, 255, 0.2)',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                color: 'white'
               }}
             >
               <ChevronLeftIcon />
@@ -1030,7 +754,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
               alignItems: 'center', 
               justifyContent: 'center', 
               border: 'none',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              color: 'white'
             }}
           >
             <ChevronLeftIcon />
@@ -1067,7 +792,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
             alignItems: 'center', 
             justifyContent: 'center', 
             border: 'none',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            color: 'white'
           }}>
             <FilterIcon />
           </button>
@@ -1136,13 +862,14 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
           justifyContent: 'center' 
         }}>
           <div style={{ textAlign: 'center' }}>
-            <MapIcon />
+            <div style={{ color: '#6b7280', fontSize: '48px', marginBottom: '16px' }}>
+              <MapIcon />
+            </div>
             <p style={{ color: '#6b7280', fontSize: '18px', fontWeight: 'bold', margin: '16px 0 0 0' }}>LAHSA Shelter Map</p>
             <p style={{ color: '#9ca3af', fontSize: '14px', margin: '4px 0 0 0' }}>Interactive map would display here</p>
           </div>
         </div>
         
-        {/* Map markers for shelters */}
         {shelters.slice(0, 3).map((shelter, index) => (
           <div 
             key={shelter.id}
@@ -1163,7 +890,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
               justifyContent: 'center', 
               border: index === 0 ? '4px solid white' : '4px solid black',
               boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              color: index === 0 ? 'white' : 'black'
             }}
             onClick={() => {
               setSelectedShelter(shelter);
@@ -1208,7 +936,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                   borderRadius: '50%', 
                   display: 'flex', 
                   alignItems: 'center', 
-                  justifyContent: 'center' 
+                  justifyContent: 'center',
+                  color: 'white'
                 }}>
                   <HomeIcon />
                 </div>
@@ -1229,7 +958,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                     display: 'flex', 
                     alignItems: 'center', 
                     justifyContent: 'center',
-                    textDecoration: 'none'
+                    textDecoration: 'none',
+                    color: 'white'
                   }}
                 >
                   <PhoneIcon />
@@ -1247,7 +977,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                     display: 'flex', 
                     alignItems: 'center', 
                     justifyContent: 'center',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    color: 'black'
                   }}
                 >
                   <MapIcon />
@@ -1279,7 +1010,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
               alignItems: 'center', 
               justifyContent: 'center', 
               border: '1px solid rgba(255, 255, 255, 0.2)',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              color: 'white'
             }}
           >
             <ChevronLeftIcon />
@@ -1319,7 +1051,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                   borderRadius: '50%', 
                   display: 'flex', 
                   alignItems: 'center', 
-                  justifyContent: 'center' 
+                  justifyContent: 'center',
+                  color: 'white'
                 }}>
                   <PhoneIcon />
                 </div>
@@ -1328,7 +1061,9 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                   <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>24/7 Housing Helpline</p>
                 </div>
               </div>
-              <ChevronLeftIcon />
+              <div style={{ color: 'black' }}>
+                <ChevronLeftIcon />
+              </div>
             </div>
           </a>
 
@@ -1354,7 +1089,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                   borderRadius: '50%', 
                   display: 'flex', 
                   alignItems: 'center', 
-                  justifyContent: 'center' 
+                  justifyContent: 'center',
+                  color: 'white'
                 }}>
                   <MapIcon />
                 </div>
@@ -1363,7 +1099,9 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                   <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Request outreach assistance</p>
                 </div>
               </div>
-              <ChevronLeftIcon />
+              <div style={{ color: 'black' }}>
+                <ChevronLeftIcon />
+              </div>
             </div>
           </a>
 
@@ -1382,7 +1120,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                   borderRadius: '50%', 
                   display: 'flex', 
                   alignItems: 'center', 
-                  justifyContent: 'center' 
+                  justifyContent: 'center',
+                  color: 'white'
                 }}>
                   <UserIcon />
                 </div>
@@ -1391,7 +1130,9 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                   <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Connect with a specialist</p>
                 </div>
               </div>
-              <ChevronLeftIcon />
+              <div style={{ color: 'black' }}>
+                <ChevronLeftIcon />
+              </div>
             </div>
           </div>
 
@@ -1415,7 +1156,8 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                   borderRadius: '50%', 
                   display: 'flex', 
                   alignItems: 'center', 
-                  justifyContent: 'center' 
+                  justifyContent: 'center',
+                  color: 'white'
                 }}>
                   <ShieldIcon />
                 </div>
@@ -1424,7 +1166,9 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
                   <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>(800) 978-3600</p>
                 </div>
               </div>
-              <ChevronLeftIcon />
+              <div style={{ color: 'black' }}>
+                <ChevronLeftIcon />
+              </div>
             </div>
           </a>
         </div>
@@ -1456,11 +1200,244 @@ export default App;14px', margin: '4px 0 0 0' }}>Let's find you shelter and supp
     </div>
   );
 
-  // Resources Screen (formerly Documents)
+  // Resources Screen
   const DocumentsScreen = () => (
     <div style={{ minHeight: '100vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column' }}>
       <div style={{ background: 'linear-gradient(to right, #dc2626, #ef4444)', padding: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
             <h1 style={{ color: 'white', fontSize: '20px', fontWeight: 'bold', margin: 0 }}>Housing Resources</h1>
-            <p style={{ color: 'white', opacity: 0.9, fontSize: '
+            <p style={{ color: 'white', opacity: 0.9, fontSize: '14px', margin: '4px 0 0 0' }}>LAHSA programs and services</p>
+          </div>
+          <button style={{ 
+            width: '40px', 
+            height: '40px', 
+            backgroundColor: 'rgba(255, 255, 255, 0.2)', 
+            backdropFilter: 'blur(4px)', 
+            borderRadius: '50%', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            border: 'none',
+            cursor: 'pointer',
+            color: 'white'
+          }}>
+            <SearchIcon />
+          </button>
+        </div>
+      </div>
+
+      <div style={{ flex: 1, padding: '24px', backgroundColor: '#f5f5f5' }}>
+        <h2 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', marginBottom: '16px' }}>Quick Links</h2>
+        
+        <div style={{ display: 'grid', gap: '12px', marginBottom: '24px' }}>
+          <a 
+            href="https://www.lahsa.org/portal/apps/find-a-shelter/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ 
+              backgroundColor: 'white', 
+              padding: '16px', 
+              borderRadius: '16px', 
+              border: '2px solid black',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: '#ef4444', 
+                borderRadius: '12px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: 'white'
+              }}>
+                <HomeIcon />
+              </div>
+              <div>
+                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>LAHSA Shelter Finder</p>
+                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Official shelter search tool</p>
+              </div>
+            </div>
+            <div style={{ color: 'black' }}>
+              <ChevronLeftIcon />
+            </div>
+          </a>
+
+          <a 
+            href="https://www.lahsa.org/documents?id=2196-lahsa-shelter-list.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ 
+              backgroundColor: 'white', 
+              padding: '16px', 
+              borderRadius: '16px', 
+              border: '2px solid black',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: '#3b82f6', 
+                borderRadius: '12px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: 'white'
+              }}>
+                <FileIcon />
+              </div>
+              <div>
+                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Shelter Directory PDF</p>
+                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Complete list for offline use</p>
+              </div>
+            </div>
+            <div style={{ color: 'black' }}>
+              <ChevronLeftIcon />
+            </div>
+          </a>
+
+          <a 
+            href="https://www.lahsa.org/winter-shelter"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ 
+              backgroundColor: 'white', 
+              padding: '16px', 
+              borderRadius: '16px', 
+              border: '2px solid black',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: '#8b5cf6', 
+                borderRadius: '12px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: 'white'
+              }}>
+                <WeatherIcon />
+              </div>
+              <div>
+                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Winter Shelter Program</p>
+                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Seasonal emergency housing</p>
+              </div>
+            </div>
+            <div style={{ color: 'black' }}>
+              <ChevronLeftIcon />
+            </div>
+          </a>
+        </div>
+
+        <h2 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', marginBottom: '16px' }}>Housing Programs</h2>
+        
+        <div style={{ display: 'grid', gap: '12px' }}>
+          <div style={{ backgroundColor: 'white', borderRadius: '16px', padding: '16px', border: '1px solid #d1d5db' }}>
+            <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: '0 0 8px 0' }}>Emergency Response Program</h3>
+            <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px 0' }}>
+              Activated during severe weather or emergencies. Provides hotel/motel vouchers to unsheltered individuals.
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ backgroundColor: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px', fontWeight: 'bold' }}>ACTIVE</span>
+              <span style={{ color: '#6b7280', fontSize: '12px' }}>Call 211 for vouchers</span>
+            </div>
+          </div>
+
+          <div style={{ backgroundColor: 'white', borderRadius: '16px', padding: '16px', border: '1px solid #d1d5db' }}>
+            <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: '0 0 8px 0' }}>Bridge Housing</h3>
+            <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px 0' }}>
+              Temporary housing with supportive services while waiting for permanent housing placement.
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ color: '#6b7280', fontSize: '12px' }}>Referral required from CES</span>
+            </div>
+          </div>
+
+          <div style={{ backgroundColor: 'white', borderRadius: '16px', padding: '16px', border: '1px solid #d1d5db' }}>
+            <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: '0 0 8px 0' }}>Transitional Housing</h3>
+            <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px 0' }}>
+              6-24 month programs with case management, job training, and life skills support.
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ color: '#6b7280', fontSize: '12px' }}>Assessment required</span>
+            </div>
+          </div>
+
+          <div style={{ backgroundColor: 'white', borderRadius: '16px', padding: '16px', border: '1px solid #d1d5db' }}>
+            <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: '0 0 8px 0' }}>Coordinated Entry System (CES)</h3>
+            <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px 0' }}>
+              Single point of access for housing resources. Assessment and prioritization for permanent housing.
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ color: '#6b7280', fontSize: '12px' }}>Call 211 to get connected</span>
+            </div>
+          </div>
+
+          <div style={{ backgroundColor: 'white', borderRadius: '16px', padding: '16px', border: '1px solid #d1d5db' }}>
+            <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: '0 0 8px 0' }}>Permanent Supportive Housing</h3>
+            <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px 0' }}>
+              Long-term housing with ongoing support services for individuals with disabilities.
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ color: '#6b7280', fontSize: '12px' }}>CES referral required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <BottomNav activeScreen="documents" />
+    </div>
+  );
+
+  // Main render logic
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'onboarding':
+        return <OnboardingScreen />;
+      case 'dashboard':
+        return <DashboardScreen />;
+      case 'map':
+        return <MapScreen />;
+      case 'chat':
+        return <ChatScreen />;
+      case 'documents':
+        return <DocumentsScreen />;
+      case 'shelter-detail':
+        return <ShelterDetailScreen />;
+      default:
+        return <OnboardingScreen />;
+    }
+  };
+
+  return (
+    <div style={{ 
+      maxWidth: '448px', 
+      margin: '0 auto', 
+      backgroundColor: 'white', 
+      borderRadius: '24px', 
+      overflow: 'hidden', 
+      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' 
+    }}>
+      {renderScreen()}
+    </div>
+  );
+};
+
+export default App;
