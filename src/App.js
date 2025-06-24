@@ -4,6 +4,8 @@ const App = () => {
   const [currentScreen, setCurrentScreen] = useState('onboarding');
   const [user, setUser] = useState({ name: 'Jordan' });
   const [selectedShelter, setSelectedShelter] = useState(null);
+  const [activeChatUser, setActiveChatUser] = useState(null);
+  const [chatMessages, setChatMessages] = useState([]);
 
   const navigateTo = (screen) => {
     setCurrentScreen(screen);
@@ -83,7 +85,30 @@ const App = () => {
     </svg>
   );
 
-  // LAHSA Shelter Data
+  // Credible Messengers data
+  const credibleMessengers = [
+    {
+      id: 1,
+      name: "Marcus",
+      initial: "M",
+      color: "#10b981",
+      specialties: "Housing & Job Support",
+      yearsHome: 3,
+      status: "online",
+      bio: "I've been home for 3 years and found stable housing and work. Happy to help with job searches, housing applications, and navigating reentry challenges."
+    },
+    {
+      id: 2,
+      name: "Ana",
+      initial: "A", 
+      color: "#3b82f6",
+      specialties: "Education & Family Reunification",
+      yearsHome: 5,
+      status: "online",
+      bio: "Been home 5 years. Went back to school, got my GED and now in college. Also worked on rebuilding family relationships. Here to support your journey."
+    }
+  ];
+
   const shelters = [
     {
       id: 1,
@@ -126,6 +151,240 @@ const App = () => {
     }
   ];
 
+  // Active Chat Interface
+  const ActiveChatScreen = () => {
+    if (!activeChatUser) return null;
+
+    const sendMessage = (messageText) => {
+      if (!messageText.trim()) return;
+
+      const newMessage = {
+        id: chatMessages.length + 1,
+        sender: user.name,
+        message: messageText,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isUser: true
+      };
+
+      setChatMessages(prev => [...prev, newMessage]);
+
+      // Simulate credible messenger response after a delay
+      setTimeout(() => {
+        const responses = [
+          "That's a great question. I went through something similar when I first got home.",
+          "I understand how you're feeling. Let me share what worked for me...",
+          "Have you tried reaching out to the resources we talked about? I can help you with that.",
+          "You're doing great by asking for help. That takes courage.",
+          "I'm here for you. Let's figure this out together."
+        ];
+        
+        const responseMessage = {
+          id: chatMessages.length + 2,
+          sender: activeChatUser.name,
+          message: responses[Math.floor(Math.random() * responses.length)],
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isUser: false
+        };
+
+        setChatMessages(prev => [...prev, responseMessage]);
+      }, 1500);
+    };
+
+    return (
+      <div style={{ minHeight: '100vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column' }}>
+        {/* Chat Header */}
+        <div style={{ backgroundColor: 'black', padding: '24px', borderBottom: '2px solid #374151' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <button 
+              onClick={() => navigateTo('chat')}
+              style={{ 
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: 'rgba(255, 255, 255, 0.1)', 
+                backdropFilter: 'blur(4px)', 
+                borderRadius: '50%', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                cursor: 'pointer',
+                color: 'white'
+              }}
+            >
+              <ChevronLeftIcon />
+            </button>
+            <div style={{ position: 'relative' }}>
+              <div style={{ 
+                width: '48px', 
+                height: '48px', 
+                backgroundColor: activeChatUser.color, 
+                borderRadius: '50%', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: '20px',
+                fontWeight: 'bold'
+              }}>
+                {activeChatUser.initial}
+              </div>
+              <div style={{ 
+                position: 'absolute', 
+                bottom: '-2px', 
+                right: '-2px', 
+                width: '16px', 
+                height: '16px', 
+                backgroundColor: '#10b981', 
+                borderRadius: '50%', 
+                border: '2px solid black'
+              }}></div>
+            </div>
+            <div style={{ flex: 1 }}>
+              <h2 style={{ color: 'white', fontWeight: 'bold', fontSize: '18px', margin: 0 }}>{activeChatUser.name}</h2>
+              <p style={{ color: 'white', opacity: 0.9, fontSize: '14px', margin: 0 }}>Credible Messenger • Online now</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Chat Messages */}
+        <div style={{ flex: 1, padding: '16px', backgroundColor: '#f5f5f5', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ backgroundColor: 'black', color: 'white', padding: '8px 16px', borderRadius: '50px', fontSize: '12px', display: 'inline-block' }}>
+              🔒 Private conversation • Only you and {activeChatUser.name} can see this
+            </div>
+          </div>
+
+          {chatMessages.map((message) => (
+            <div 
+              key={message.id}
+              style={{ 
+                display: 'flex', 
+                alignItems: 'start', 
+                gap: '12px', 
+                justifyContent: message.isUser ? 'flex-end' : 'flex-start' 
+              }}
+            >
+              {!message.isUser && (
+                <div style={{ 
+                  width: '32px', 
+                  height: '32px', 
+                  backgroundColor: activeChatUser.color, 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  flexShrink: 0
+                }}>
+                  {activeChatUser.initial}
+                </div>
+              )}
+              
+              <div style={{ flex: 1, textAlign: message.isUser ? 'right' : 'left', maxWidth: '70%' }}>
+                <div style={{ 
+                  backgroundColor: message.isUser ? 'black' : 'white', 
+                  color: message.isUser ? 'white' : 'black',
+                  borderRadius: '16px', 
+                  borderTopRightRadius: message.isUser ? '4px' : '16px',
+                  borderTopLeftRadius: message.isUser ? '16px' : '4px',
+                  padding: '12px 16px',
+                  border: message.isUser ? 'none' : '1px solid #d1d5db',
+                  display: 'inline-block',
+                  boxShadow: message.isUser ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.05)'
+                }}>
+                  <p style={{ fontSize: '14px', margin: 0, lineHeight: 1.4 }}>{message.message}</p>
+                </div>
+                <p style={{ 
+                  color: '#6b7280', 
+                  fontSize: '12px', 
+                  margin: '4px 8px 0 8px',
+                  textAlign: message.isUser ? 'right' : 'left'
+                }}>
+                  {message.timestamp}
+                </p>
+              </div>
+
+              {message.isUser && (
+                <div style={{ 
+                  width: '32px', 
+                  height: '32px', 
+                  backgroundColor: '#6b7280', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  flexShrink: 0
+                }}>
+                  {user.name.charAt(0)}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Message Input */}
+        <div style={{ backgroundColor: 'white', padding: '16px', borderTop: '2px solid #f5f5f5' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ 
+              flex: 1, 
+              backgroundColor: '#f5f5f5', 
+              border: '2px solid black', 
+              borderRadius: '16px', 
+              padding: '12px 16px' 
+            }}>
+              <input 
+                type="text" 
+                placeholder="Type your message..."
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    sendMessage(e.target.value);
+                    e.target.value = '';
+                  }
+                }}
+                style={{ 
+                  backgroundColor: 'transparent', 
+                  color: 'black', 
+                  width: '100%', 
+                  outline: 'none', 
+                  border: 'none',
+                  fontSize: '14px'
+                }}
+              />
+            </div>
+            <button 
+              onClick={(e) => {
+                const input = e.target.parentElement.querySelector('input');
+                sendMessage(input.value);
+                input.value = '';
+              }}
+              style={{ 
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: 'black', 
+                borderRadius: '50%', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                border: 'none',
+                cursor: 'pointer',
+                color: 'white'
+              }}
+            >
+              <svg style={{ width: '16px', height: '16px' }} fill="currentColor" viewBox="0 0 24 24">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // Bottom Navigation Component
   const BottomNav = ({ activeScreen }) => (
     <div style={{ 
@@ -165,7 +424,7 @@ const App = () => {
         }}
       >
         <MapIcon />
-        <span style={{ fontSize: '12px' }}>Shelters</span>
+        <span style={{ fontSize: '12px' }}>Housing</span>
       </button>
       <button 
         onClick={() => navigateTo('chat')}
@@ -232,7 +491,7 @@ const App = () => {
         </div>
         <h1 style={{ fontSize: '36px', fontWeight: 'bold', color: 'white', marginBottom: '8px' }}>Our Netwrkx</h1>
         <p style={{ fontSize: '18px', color: 'white', opacity: 0.9, marginBottom: '32px', lineHeight: 1.6, padding: '0 16px' }}>
-          Connect with LA's housing services, shelters, and support resources all in one place
+          Connect with LA's juvenile justice reentry services, shelters, and resources all in one place
         </p>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '40px' }}>
@@ -260,8 +519,8 @@ const App = () => {
               <HomeIcon />
             </div>
             <div style={{ textAlign: 'left' }}>
-              <p style={{ fontWeight: 'bold', margin: 0 }}>Real-Time LAHSA Shelters</p>
-              <p style={{ fontSize: '14px', opacity: 0.8, margin: 0 }}>Find emergency & bridge housing</p>
+              <p style={{ fontWeight: 'bold', margin: 0 }}>Real-Time Housing Network</p>
+              <p style={{ fontSize: '14px', opacity: 0.8, margin: 0 }}>Find emergency & transitional housing</p>
             </div>
           </div>
           
@@ -318,8 +577,8 @@ const App = () => {
               <WeatherIcon />
             </div>
             <div style={{ textAlign: 'left' }}>
-              <p style={{ fontWeight: 'bold', margin: 0 }}>Emergency Weather Alerts</p>
-              <p style={{ fontSize: '14px', opacity: 0.8, margin: 0 }}>Get notified of shelter activations</p>
+              <p style={{ fontWeight: 'bold', margin: 0 }}>Credible Messenger</p>
+              <p style={{ fontSize: '14px', opacity: 0.8, margin: 0 }}>Peer support and guidance</p>
             </div>
           </div>
         </div>
@@ -375,7 +634,7 @@ const App = () => {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
             <h1 style={{ color: 'white', fontSize: '20px', fontWeight: 'bold', margin: 0 }}>Hey {user.name}! 🏠</h1>
-            <p style={{ color: 'white', opacity: 0.9, fontSize: '14px', margin: '4px 0 0 0' }}>LAHSA Services & Information</p>
+            <p style={{ color: 'white', opacity: 0.9, fontSize: '14px', margin: '4px 0 0 0' }}>Reentry Services & Resources</p>
           </div>
           <button style={{ 
             width: '40px', 
@@ -441,12 +700,11 @@ const App = () => {
               <HomeIcon />
               <span style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', fontSize: '12px', padding: '2px 8px', borderRadius: '50px' }}>5 nearby</span>
             </div>
-            <p style={{ fontWeight: 'bold', textAlign: 'left', margin: 0 }}>Emergency Shelter</p>
+            <p style={{ fontWeight: 'bold', textAlign: 'left', margin: 0 }}>Emergency Housing</p>
             <p style={{ fontSize: '12px', opacity: 0.9, textAlign: 'left', margin: '4px 0 0 0' }}>Find bed tonight</p>
           </button>
           
-          <a 
-            href="tel:211"
+          <button 
             style={{ 
               backgroundColor: 'white', 
               border: '2px solid black', 
@@ -454,24 +712,18 @@ const App = () => {
               borderRadius: '24px', 
               color: 'black',
               cursor: 'pointer',
-              transition: 'transform 0.2s ease',
-              textDecoration: 'none',
-              display: 'block'
+              transition: 'transform 0.2s ease'
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-              <PhoneIcon />
-              <span style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', fontSize: '12px', padding: '2px 8px', borderRadius: '50px' }}>24/7</span>
+              <HomeIcon />
+              <span style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', fontSize: '12px', padding: '2px 8px', borderRadius: '50px' }}>3 units</span>
             </div>
-            <p style={{ fontWeight: 'bold', textAlign: 'left', margin: 0 }}>Call 211</p>
-            <p style={{ fontSize: '12px', opacity: 0.7, textAlign: 'left', margin: '4px 0 0 0' }}>Immediate help</p>
-          </a>
+            <p style={{ fontWeight: 'bold', textAlign: 'left', margin: 0 }}>Transitional Housing</p>
+            <p style={{ fontSize: '12px', opacity: 0.7, textAlign: 'left', margin: '4px 0 0 0' }}>6-24 month programs</p>
+          </button>
           
           <button 
-            onClick={() => {
-              setSelectedShelter(shelters[2]);
-              navigateTo('shelter-detail');
-            }}
             style={{ 
               backgroundColor: 'black', 
               padding: '20px', 
@@ -484,16 +736,14 @@ const App = () => {
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
               <UserIcon />
-              <span style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', fontSize: '12px', padding: '2px 8px', borderRadius: '50px' }}>18-24</span>
+              <span style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', fontSize: '12px', padding: '2px 8px', borderRadius: '50px' }}>8 open</span>
             </div>
-            <p style={{ fontWeight: 'bold', textAlign: 'left', margin: 0 }}>Youth Shelter</p>
-            <p style={{ fontSize: '12px', opacity: 0.9, textAlign: 'left', margin: '4px 0 0 0' }}>Covenant House</p>
+            <p style={{ fontWeight: 'bold', textAlign: 'left', margin: 0 }}>Food & Meals</p>
+            <p style={{ fontSize: '12px', opacity: 0.9, textAlign: 'left', margin: '4px 0 0 0' }}>Daily meal programs</p>
           </button>
 
-          <a 
-            href="https://la-hop.org"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button 
+            onClick={() => navigateTo('chat')}
             style={{ 
               backgroundColor: 'white', 
               border: '2px solid black', 
@@ -501,24 +751,22 @@ const App = () => {
               borderRadius: '24px', 
               color: 'black',
               cursor: 'pointer',
-              transition: 'transform 0.2s ease',
-              textDecoration: 'none',
-              display: 'block'
+              transition: 'transform 0.2s ease'
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-              <MapIcon />
-              <span style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', fontSize: '12px', padding: '2px 8px', borderRadius: '50px' }}>LA-HOP</span>
+              <ShieldIcon />
+              <span style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', fontSize: '12px', padding: '2px 8px', borderRadius: '50px' }}>Available</span>
             </div>
-            <p style={{ fontWeight: 'bold', textAlign: 'left', margin: 0 }}>Outreach Request</p>
-            <p style={{ fontSize: '12px', opacity: 0.7, textAlign: 'left', margin: '4px 0 0 0' }}>Get help finding you</p>
-          </a>
+            <p style={{ fontWeight: 'bold', textAlign: 'left', margin: 0 }}>Mental Health</p>
+            <p style={{ fontSize: '12px', opacity: 0.7, textAlign: 'left', margin: '4px 0 0 0' }}>Counseling & support</p>
+          </button>
         </div>
       </div>
 
       <div style={{ padding: '0 24px 16px 24px', backgroundColor: 'white' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-          <h2 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', margin: 0 }}>Nearest LAHSA Shelters</h2>
+          <h2 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', margin: 0 }}>Nearest Housing & Resources</h2>
           <button 
             onClick={() => navigateTo('map')}
             style={{ 
@@ -627,7 +875,7 @@ const App = () => {
             >
               <ChevronLeftIcon />
             </button>
-            <h1 style={{ color: 'white', fontSize: '20px', fontWeight: 'bold', margin: 0 }}>Shelter Details</h1>
+            <h2 style={{ color: 'white', fontWeight: 'bold', fontSize: '18px', margin: 0 }}>Housing Details</h2>
           </div>
         </div>
 
@@ -771,7 +1019,7 @@ const App = () => {
               <SearchIcon />
               <input 
                 type="text" 
-                placeholder="Search LAHSA shelters..." 
+                placeholder="Search housing and resources..." 
                 style={{ 
                   backgroundColor: 'transparent', 
                   color: 'black', 
@@ -865,7 +1113,7 @@ const App = () => {
             <div style={{ color: '#6b7280', fontSize: '48px', marginBottom: '16px' }}>
               <MapIcon />
             </div>
-            <p style={{ color: '#6b7280', fontSize: '18px', fontWeight: 'bold', margin: '16px 0 0 0' }}>LAHSA Shelter Map</p>
+            <p style={{ color: '#6b7280', fontSize: '18px', fontWeight: 'bold', margin: '16px 0 0 0' }}>Housing & Resource Map</p>
             <p style={{ color: '#9ca3af', fontSize: '14px', margin: '4px 0 0 0' }}>Interactive map would display here</p>
           </div>
         </div>
@@ -906,7 +1154,7 @@ const App = () => {
 
       <div style={{ backgroundColor: 'white', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', padding: '24px', border: '2px solid black', borderBottom: 'none' }}>
         <div style={{ width: '48px', height: '4px', backgroundColor: 'black', borderRadius: '50px', margin: '0 auto 16px auto' }}></div>
-        <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', marginBottom: '16px' }}>LAHSA Shelters ({shelters.length})</h3>
+        <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', marginBottom: '16px' }}>Housing & Resources ({shelters.length})</h3>
         
         <div style={{ maxHeight: '256px', overflowY: 'auto' }}>
           {shelters.map((shelter) => (
@@ -1017,8 +1265,8 @@ const App = () => {
             <ChevronLeftIcon />
           </button>
           <div style={{ flex: 1 }}>
-            <h2 style={{ color: 'white', fontWeight: 'bold', fontSize: '18px', margin: 0 }}>Support Center</h2>
-            <p style={{ color: 'white', opacity: 0.9, fontSize: '14px', margin: 0 }}>Get help finding shelter and services</p>
+            <h2 style={{ color: 'white', fontWeight: 'bold', fontSize: '18px', margin: 0 }}>Credible Messengers</h2>
+            <p style={{ color: 'white', opacity: 0.9, fontSize: '14px', margin: 0 }}>Connect with peer mentors who understand your journey</p>
           </div>
         </div>
       </div>
@@ -1026,16 +1274,235 @@ const App = () => {
       <div style={{ flex: 1, padding: '16px', backgroundColor: '#f5f5f5', overflowY: 'auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div style={{ backgroundColor: 'black', color: 'white', padding: '8px 16px', borderRadius: '50px', fontSize: '12px', display: 'inline-block' }}>
-            🏠 LAHSA Support Services • Private & Secure
+            💬 Chat with people who've been where you are • Safe & Private
           </div>
         </div>
 
+        {/* Active Credible Messengers */}
+        <div style={{ marginBottom: '24px' }}>
+          <h3 style={{ color: 'black', fontSize: '16px', fontWeight: 'bold', marginBottom: '12px' }}>Available Now</h3>
+          
+          {/* Marcus Card */}
+          <button 
+            onClick={() => {
+              setCurrentScreen('active-chat');
+              setActiveChatUser(credibleMessengers[0]);
+              setChatMessages([
+                {
+                  id: 1,
+                  sender: "Marcus",
+                  message: `Hey ${user.name}! 👋 I'm Marcus. I've been home for 3 years and found stable housing and work. Happy to help with job searches, housing applications, and navigating reentry challenges. What's going on? How can I help you today?`,
+                  timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                  isUser: false
+                }
+              ]);
+            }}
+            style={{ 
+              backgroundColor: 'white', 
+              border: '2px solid #10b981', 
+              borderRadius: '16px', 
+              padding: '16px',
+              marginBottom: '12px',
+              cursor: 'pointer',
+              width: '100%',
+              textAlign: 'left'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ position: 'relative' }}>
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  backgroundColor: '#10b981', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '20px',
+                  fontWeight: 'bold'
+                }}>
+                  M
+                </div>
+                <div style={{ 
+                  position: 'absolute', 
+                  bottom: '-2px', 
+                  right: '-2px', 
+                  width: '16px', 
+                  height: '16px', 
+                  backgroundColor: '#10b981', 
+                  borderRadius: '50%', 
+                  border: '2px solid white'
+                }}></div>
+              </div>
+              <div style={{ flex: 1 }}>
+                <h4 style={{ color: 'black', fontWeight: 'bold', margin: 0, fontSize: '16px' }}>Marcus</h4>
+                <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Been home 3 years • Housing & Job Support</p>
+                <p style={{ color: '#10b981', fontSize: '12px', margin: '4px 0 0 0', fontWeight: 'bold' }}>● Online now</p>
+              </div>
+              <div style={{ 
+                backgroundColor: '#10b981', 
+                color: 'white', 
+                padding: '8px 16px', 
+                borderRadius: '8px', 
+                border: 'none', 
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}>
+                Chat
+              </div>
+            </div>
+          </button>
+
+          {/* Ana Card */}
+          <button 
+            onClick={() => {
+              setCurrentScreen('active-chat');
+              setActiveChatUser(credibleMessengers[1]);
+              setChatMessages([
+                {
+                  id: 1,
+                  sender: "Ana",
+                  message: `Hey ${user.name}! 👋 I'm Ana. Been home 5 years. Went back to school, got my GED and now in college. Also worked on rebuilding family relationships. Here to support your journey. What can I help you with today?`,
+                  timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                  isUser: false
+                }
+              ]);
+            }}
+            style={{ 
+              backgroundColor: 'white', 
+              border: '2px solid #3b82f6', 
+              borderRadius: '16px', 
+              padding: '16px',
+              cursor: 'pointer',
+              width: '100%',
+              textAlign: 'left'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ position: 'relative' }}>
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  backgroundColor: '#3b82f6', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '20px',
+                  fontWeight: 'bold'
+                }}>
+                  A
+                </div>
+                <div style={{ 
+                  position: 'absolute', 
+                  bottom: '-2px', 
+                  right: '-2px', 
+                  width: '16px', 
+                  height: '16px', 
+                  backgroundColor: '#10b981', 
+                  borderRadius: '50%', 
+                  border: '2px solid white'
+                }}></div>
+              </div>
+              <div style={{ flex: 1 }}>
+                <h4 style={{ color: 'black', fontWeight: 'bold', margin: 0, fontSize: '16px' }}>Ana</h4>
+                <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Been home 5 years • Education & Family Reunification</p>
+                <p style={{ color: '#10b981', fontSize: '12px', margin: '4px 0 0 0', fontWeight: 'bold' }}>● Online now</p>
+              </div>
+              <div style={{ 
+                backgroundColor: '#3b82f6', 
+                color: 'white', 
+                padding: '8px 16px', 
+                borderRadius: '8px', 
+                border: 'none', 
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}>
+                Chat
+              </div>
+            </div>
+          </button>
+        </div>
+
+        {/* Group Chats */}
+        <div style={{ marginBottom: '24px' }}>
+          <h3 style={{ color: 'black', fontSize: '16px', fontWeight: 'bold', marginBottom: '12px' }}>Group Conversations</h3>
+          
+          <div style={{ 
+            backgroundColor: 'white', 
+            border: '2px solid black', 
+            borderRadius: '16px', 
+            padding: '16px',
+            marginBottom: '12px',
+            cursor: 'pointer'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  backgroundColor: '#8b5cf6', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'white'
+                }}>
+                  <ChatIcon />
+                </div>
+                <div>
+                  <h4 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: 0 }}>Housing Support Group</h4>
+                  <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>12 members • Share housing tips & resources</p>
+                </div>
+              </div>
+              <div style={{ color: 'black' }}>
+                <ChevronLeftIcon />
+              </div>
+            </div>
+          </div>
+
+          <div style={{ 
+            backgroundColor: 'white', 
+            border: '2px solid black', 
+            borderRadius: '16px', 
+            padding: '16px',
+            cursor: 'pointer'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  backgroundColor: '#f59e0b', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'white'
+                }}>
+                  <UserIcon />
+                </div>
+                <div>
+                  <h4 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: 0 }}>Job & Education Circle</h4>
+                  <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>8 members • Career guidance & opportunities</p>
+                </div>
+              </div>
+              <div style={{ color: 'black' }}>
+                <ChevronLeftIcon />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Emergency Support */}
         <div style={{ display: 'grid', gap: '12px' }}>
           <a 
             href="tel:211"
             style={{ 
               backgroundColor: 'white', 
-              border: '2px solid black', 
+              border: '2px solid #ef4444', 
               borderRadius: '16px', 
               padding: '20px',
               textDecoration: 'none',
@@ -1057,113 +1524,8 @@ const App = () => {
                   <PhoneIcon />
                 </div>
                 <div>
-                  <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: 0 }}>Call 211</h3>
-                  <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>24/7 Housing Helpline</p>
-                </div>
-              </div>
-              <div style={{ color: 'black' }}>
-                <ChevronLeftIcon />
-              </div>
-            </div>
-          </a>
-
-          <a 
-            href="https://la-hop.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              backgroundColor: 'white', 
-              border: '2px solid black', 
-              borderRadius: '16px', 
-              padding: '20px',
-              textDecoration: 'none',
-              display: 'block'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <div style={{ 
-                  width: '48px', 
-                  height: '48px', 
-                  backgroundColor: '#3b82f6', 
-                  borderRadius: '50%', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  color: 'white'
-                }}>
-                  <MapIcon />
-                </div>
-                <div>
-                  <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: 0 }}>LA-HOP Portal</h3>
-                  <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Request outreach assistance</p>
-                </div>
-              </div>
-              <div style={{ color: 'black' }}>
-                <ChevronLeftIcon />
-              </div>
-            </div>
-          </a>
-
-          <div style={{ 
-            backgroundColor: 'white', 
-            border: '2px solid black', 
-            borderRadius: '16px', 
-            padding: '20px'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <div style={{ 
-                  width: '48px', 
-                  height: '48px', 
-                  backgroundColor: '#10b981', 
-                  borderRadius: '50%', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  color: 'white'
-                }}>
-                  <UserIcon />
-                </div>
-                <div>
-                  <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: 0 }}>Case Management</h3>
-                  <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Connect with a specialist</p>
-                </div>
-              </div>
-              <div style={{ color: 'black' }}>
-                <ChevronLeftIcon />
-              </div>
-            </div>
-          </div>
-
-          <a 
-            href="tel:18009783600"
-            style={{ 
-              backgroundColor: 'white', 
-              border: '2px solid black', 
-              borderRadius: '16px', 
-              padding: '20px',
-              textDecoration: 'none',
-              display: 'block'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <div style={{ 
-                  width: '48px', 
-                  height: '48px', 
-                  backgroundColor: '#8b5cf6', 
-                  borderRadius: '50%', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  color: 'white'
-                }}>
-                  <ShieldIcon />
-                </div>
-                <div>
-                  <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: 0 }}>Family Support</h3>
-                  <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>(800) 978-3600</p>
+                  <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: 0 }}>Crisis Support - Call 211</h3>
+                  <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>24/7 immediate help and resources</p>
                 </div>
               </div>
               <div style={{ color: 'black' }}>
@@ -1174,25 +1536,10 @@ const App = () => {
         </div>
 
         <div style={{ marginTop: '24px', backgroundColor: '#dbeafe', borderRadius: '16px', padding: '16px', border: '1px solid #3b82f6' }}>
-          <h3 style={{ color: '#1e40af', fontSize: '16px', fontWeight: 'bold', margin: '0 0 8px 0' }}>Emergency Weather Alert</h3>
-          <p style={{ color: '#1e40af', fontSize: '14px', margin: '0 0 12px 0' }}>
-            Hotel vouchers available due to severe weather. Call 211 or connect with an outreach worker.
+          <h3 style={{ color: '#1e40af', fontSize: '16px', fontWeight: 'bold', margin: '0 0 8px 0' }}>Safe Space Guidelines</h3>
+          <p style={{ color: '#1e40af', fontSize: '14px', margin: 0 }}>
+            All conversations are private and moderated. Our credible messengers are trained peers who've successfully reintegrated into the community.
           </p>
-          <a 
-            href="tel:211"
-            style={{ 
-              backgroundColor: '#1e40af', 
-              color: 'white', 
-              padding: '8px 16px', 
-              borderRadius: '8px', 
-              fontWeight: 'bold', 
-              fontSize: '14px',
-              textDecoration: 'none',
-              display: 'inline-block'
-            }}
-          >
-            Call 211 Now
-          </a>
         </div>
       </div>
 
@@ -1206,8 +1553,8 @@ const App = () => {
       <div style={{ background: 'linear-gradient(to right, #dc2626, #ef4444)', padding: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
-            <h1 style={{ color: 'white', fontSize: '20px', fontWeight: 'bold', margin: 0 }}>Housing Resources</h1>
-            <p style={{ color: 'white', opacity: 0.9, fontSize: '14px', margin: '4px 0 0 0' }}>LAHSA programs and services</p>
+            <h1 style={{ color: 'white', fontSize: '20px', fontWeight: 'bold', margin: 0 }}>Reentry Resources</h1>
+            <p style={{ color: 'white', opacity: 0.9, fontSize: '14px', margin: '4px 0 0 0' }}>Housing programs and support services</p>
           </div>
           <button style={{ 
             width: '40px', 
@@ -1228,7 +1575,125 @@ const App = () => {
       </div>
 
       <div style={{ flex: 1, padding: '24px', backgroundColor: '#f5f5f5' }}>
-        <h2 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', marginBottom: '16px' }}>Quick Links</h2>
+        <h2 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', marginBottom: '16px' }}>Reentry Support Organizations</h2>
+        
+        <div style={{ display: 'grid', gap: '12px', marginBottom: '24px' }}>
+          <a 
+            href="https://www.avalon-carver.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ 
+              backgroundColor: 'white', 
+              padding: '16px', 
+              borderRadius: '16px', 
+              border: '2px solid #ef4444',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: '#ef4444', 
+                borderRadius: '12px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: 'white'
+              }}>
+                <HomeIcon />
+              </div>
+              <div>
+                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Avalon Carver</p>
+                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Emergency housing & transitional housing</p>
+              </div>
+            </div>
+            <div style={{ color: 'black' }}>
+              <ChevronLeftIcon />
+            </div>
+          </a>
+
+          <a 
+            href="https://homeboyindustries.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ 
+              backgroundColor: 'white', 
+              padding: '16px', 
+              borderRadius: '16px', 
+              border: '2px solid black',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: '#10b981', 
+                borderRadius: '12px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: 'white'
+              }}>
+                <UserIcon />
+              </div>
+              <div>
+                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Homeboy Industries</p>
+                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Jobs, education & healing community</p>
+              </div>
+            </div>
+            <div style={{ color: 'black' }}>
+              <ChevronLeftIcon />
+            </div>
+          </a>
+
+          <a 
+            href="https://www.pathwaytokinship.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ 
+              backgroundColor: 'white', 
+              padding: '16px', 
+              borderRadius: '16px', 
+              border: '2px solid black',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: '#3b82f6', 
+                borderRadius: '12px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: 'white'
+              }}>
+                <ShieldIcon />
+              </div>
+              <div>
+                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Pathway to Kinship</p>
+                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Family reunification & support services</p>
+              </div>
+            </div>
+            <div style={{ color: 'black' }}>
+              <ChevronLeftIcon />
+            </div>
+          </a>
+        </div>
+
+        <h2 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', marginBottom: '16px' }}>Official Resources</h2>
         
         <div style={{ display: 'grid', gap: '12px', marginBottom: '24px' }}>
           <a 
@@ -1260,8 +1725,8 @@ const App = () => {
                 <HomeIcon />
               </div>
               <div>
-                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>LAHSA Shelter Finder</p>
-                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Official shelter search tool</p>
+                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Official Housing Finder</p>
+                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>LA County housing search tool</p>
               </div>
             </div>
             <div style={{ color: 'black' }}>
@@ -1270,14 +1735,12 @@ const App = () => {
           </a>
 
           <a 
-            href="https://www.lahsa.org/documents?id=2196-lahsa-shelter-list.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="tel:211"
             style={{ 
               backgroundColor: 'white', 
               padding: '16px', 
               borderRadius: '16px', 
-              border: '2px solid black',
+              border: '2px solid #10b981',
               textDecoration: 'none',
               display: 'flex',
               alignItems: 'center',
@@ -1288,56 +1751,18 @@ const App = () => {
               <div style={{ 
                 width: '40px', 
                 height: '40px', 
-                backgroundColor: '#3b82f6', 
+                backgroundColor: '#10b981', 
                 borderRadius: '12px', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
                 color: 'white'
               }}>
-                <FileIcon />
+                <PhoneIcon />
               </div>
               <div>
-                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Shelter Directory PDF</p>
-                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Complete list for offline use</p>
-              </div>
-            </div>
-            <div style={{ color: 'black' }}>
-              <ChevronLeftIcon />
-            </div>
-          </a>
-
-          <a 
-            href="https://www.lahsa.org/winter-shelter"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              backgroundColor: 'white', 
-              padding: '16px', 
-              borderRadius: '16px', 
-              border: '2px solid black',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ 
-                width: '40px', 
-                height: '40px', 
-                backgroundColor: '#8b5cf6', 
-                borderRadius: '12px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                color: 'white'
-              }}>
-                <WeatherIcon />
-              </div>
-              <div>
-                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Winter Shelter Program</p>
-                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>Seasonal emergency housing</p>
+                <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>Call 211 - Emergency Help</p>
+                <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>24/7 housing and crisis support</p>
               </div>
             </div>
             <div style={{ color: 'black' }}>
@@ -1379,26 +1804,6 @@ const App = () => {
               <span style={{ color: '#6b7280', fontSize: '12px' }}>Assessment required</span>
             </div>
           </div>
-
-          <div style={{ backgroundColor: 'white', borderRadius: '16px', padding: '16px', border: '1px solid #d1d5db' }}>
-            <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: '0 0 8px 0' }}>Coordinated Entry System (CES)</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px 0' }}>
-              Single point of access for housing resources. Assessment and prioritization for permanent housing.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: '#6b7280', fontSize: '12px' }}>Call 211 to get connected</span>
-            </div>
-          </div>
-
-          <div style={{ backgroundColor: 'white', borderRadius: '16px', padding: '16px', border: '1px solid #d1d5db' }}>
-            <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '16px', margin: '0 0 8px 0' }}>Permanent Supportive Housing</h3>
-            <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px 0' }}>
-              Long-term housing with ongoing support services for individuals with disabilities.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: '#6b7280', fontSize: '12px' }}>CES referral required</span>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -1421,6 +1826,8 @@ const App = () => {
         return <DocumentsScreen />;
       case 'shelter-detail':
         return <ShelterDetailScreen />;
+      case 'active-chat':
+        return <ActiveChatScreen />;
       default:
         return <OnboardingScreen />;
     }
