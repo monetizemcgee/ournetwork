@@ -27,7 +27,7 @@ function App() {
       
       <h1 style={{ fontSize: '32px', marginBottom: '10px' }}>Our Netwrkx</h1>
       <p style={{ fontSize: '16px', marginBottom: '40px', opacity: 0.9 }}>
-        Juvenile justice reentry housing assistance for Los Angeles
+        Connect with LA's juvenile justice reentry services, shelters, and resources all in one place
       </p>
       
       <button 
@@ -71,7 +71,7 @@ function App() {
   );
 
   const DashboardScreen = () => (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#f5f5f5', paddingBottom: '80px' }}>
       <div style={{ backgroundColor: 'black', padding: '20px', color: 'white' }}>
         <h1 style={{ fontSize: '20px', margin: '0 0 5px 0' }}>Hey Jordan! 🏠</h1>
         <p style={{ opacity: 0.9, fontSize: '14px', margin: 0 }}>
@@ -201,66 +201,11 @@ function App() {
           </div>
         </div>
       </div>
-
-      {/* Navigation */}
-      <div style={{ 
-        backgroundColor: 'white', 
-        borderTop: '2px solid black', 
-        padding: '15px', 
-        display: 'flex', 
-        justifyContent: 'space-around',
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        maxWidth: '400px',
-        margin: '0 auto'
-      }}>
-        <button 
-          onClick={() => setCurrentScreen('dashboard')}
-          style={{ 
-            background: 'none', 
-            border: 'none', 
-            fontSize: '12px',
-            cursor: 'pointer',
-            textAlign: 'center'
-          }}
-        >
-          <div style={{ fontSize: '20px' }}>🏠</div>
-          Home
-        </button>
-        <button 
-          onClick={() => setCurrentScreen('chat')}
-          style={{ 
-            background: 'none', 
-            border: 'none', 
-            fontSize: '12px',
-            cursor: 'pointer',
-            textAlign: 'center'
-          }}
-        >
-          <div style={{ fontSize: '20px' }}>💬</div>
-          Support
-        </button>
-        <button 
-          onClick={() => setCurrentScreen('home')}
-          style={{ 
-            background: 'none', 
-            border: 'none', 
-            fontSize: '12px',
-            cursor: 'pointer',
-            textAlign: 'center'
-          }}
-        >
-          <div style={{ fontSize: '20px' }}>📋</div>
-          Resources
-        </button>
-      </div>
     </div>
   );
 
   const ChatScreen = () => (
-    <div style={{ minHeight: '100vh', backgroundColor: 'white' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: 'white', paddingBottom: '80px' }}>
       <div style={{ backgroundColor: 'black', padding: '20px', color: 'white' }}>
         <h2 style={{ fontSize: '18px', margin: 0 }}>Credible Messengers</h2>
         <p style={{ opacity: 0.9, fontSize: '14px', margin: '5px 0 0 0' }}>
@@ -282,36 +227,93 @@ function App() {
           </div>
         </div>
 
-        <div style={{ 
-          backgroundColor: 'white', 
-          border: '2px solid #10b981', 
-          borderRadius: '15px', 
-          padding: '15px',
-          marginBottom: '15px'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ 
-              width: '48px', 
-              height: '48px', 
-              backgroundColor: '#10b981', 
-              borderRadius: '50%', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
-              color: 'white',
-              fontSize: '20px',
-              fontWeight: 'bold'
-            }}>
-              M
+        <div style={{ marginBottom: '20px' }}>
+          <h3 style={{ fontSize: '16px', marginBottom: '12px' }}>Available Now</h3>
+          
+          <div style={{ 
+            backgroundColor: 'white', 
+            border: '2px solid #10b981', 
+            borderRadius: '15px', 
+            padding: '15px',
+            marginBottom: '15px'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                width: '48px', 
+                height: '48px', 
+                backgroundColor: '#10b981', 
+                borderRadius: '50%', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: '20px',
+                fontWeight: 'bold'
+              }}>
+                M
+              </div>
+              <div style={{ flex: 1 }}>
+                <h4 style={{ margin: '0 0 2px 0', fontSize: '16px' }}>Marcus</h4>
+                <p style={{ color: '#666', fontSize: '14px', margin: '0 0 5px 0' }}>
+                  Been home 3 years • Housing & Job Support
+                </p>
+                <p style={{ color: '#10b981', fontSize: '12px', margin: 0, fontWeight: 'bold' }}>
+                  ● Online now
+                </p>
+              </div>
+              <div style={{ 
+                backgroundColor: '#10b981', 
+                color: 'white', 
+                padding: '8px 16px', 
+                borderRadius: '8px', 
+                fontSize: '14px',
+                fontWeight: 'bold'
+              }}>
+                Chat
+              </div>
             </div>
-            <div>
-              <h4 style={{ margin: '0 0 2px 0', fontSize: '16px' }}>Marcus</h4>
-              <p style={{ color: '#666', fontSize: '14px', margin: '0 0 5px 0' }}>
-                Been home 3 years • Housing & Job Support
-              </p>
-              <p style={{ color: '#10b981', fontSize: '12px', margin: 0, fontWeight: 'bold' }}>
-                ● Online now
-              </p>
+          </div>
+
+          <div style={{ 
+            backgroundColor: 'white', 
+            border: '2px solid #3b82f6', 
+            borderRadius: '15px', 
+            padding: '15px'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                width: '48px', 
+                height: '48px', 
+                backgroundColor: '#3b82f6', 
+                borderRadius: '50%', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: '20px',
+                fontWeight: 'bold'
+              }}>
+                A
+              </div>
+              <div style={{ flex: 1 }}>
+                <h4 style={{ margin: '0 0 2px 0', fontSize: '16px' }}>Ana</h4>
+                <p style={{ color: '#666', fontSize: '14px', margin: '0 0 5px 0' }}>
+                  Been home 5 years • Education & Family Support
+                </p>
+                <p style={{ color: '#10b981', fontSize: '12px', margin: 0, fontWeight: 'bold' }}>
+                  ● Online now
+                </p>
+              </div>
+              <div style={{ 
+                backgroundColor: '#3b82f6', 
+                color: 'white', 
+                padding: '8px 16px', 
+                borderRadius: '8px', 
+                fontSize: '14px',
+                fontWeight: 'bold'
+              }}>
+                Chat
+              </div>
             </div>
           </div>
         </div>
@@ -351,61 +353,127 @@ function App() {
           </div>
         </a>
       </div>
+    </div>
+  );
 
-      {/* Navigation */}
-      <div style={{ 
-        backgroundColor: 'white', 
-        borderTop: '2px solid black', 
-        padding: '15px', 
-        display: 'flex', 
-        justifyContent: 'space-around',
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        maxWidth: '400px',
-        margin: '0 auto'
-      }}>
-        <button 
-          onClick={() => setCurrentScreen('dashboard')}
+  const ResourcesScreen = () => (
+    <div style={{ minHeight: '100vh', backgroundColor: 'white', paddingBottom: '80px' }}>
+      <div style={{ backgroundColor: '#dc2626', padding: '20px', color: 'white' }}>
+        <h2 style={{ fontSize: '18px', margin: 0 }}>Reentry Resources</h2>
+        <p style={{ opacity: 0.9, fontSize: '14px', margin: '5px 0 0 0' }}>
+          Housing programs and support services
+        </p>
+      </div>
+
+      <div style={{ padding: '20px', backgroundColor: '#f5f5f5' }}>
+        <h3 style={{ fontSize: '16px', marginBottom: '12px' }}>Reentry Support Organizations</h3>
+        
+        <div style={{ marginBottom: '20px' }}>
+          <a 
+            href="https://www.avalon-carver.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ 
+              backgroundColor: 'white', 
+              padding: '16px', 
+              borderRadius: '12px', 
+              border: '2px solid #ef4444',
+              textDecoration: 'none',
+              display: 'block',
+              marginBottom: '12px'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: '#ef4444', 
+                borderRadius: '8px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: '20px'
+              }}>
+                🏠
+              </div>
+              <div>
+                <h4 style={{ color: 'black', margin: '0 0 4px 0', fontSize: '14px' }}>Avalon Carver</h4>
+                <p style={{ color: '#666', fontSize: '12px', margin: 0 }}>Emergency housing & transitional housing</p>
+              </div>
+            </div>
+          </a>
+
+          <a 
+            href="https://homeboyindustries.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ 
+              backgroundColor: 'white', 
+              padding: '16px', 
+              borderRadius: '12px', 
+              border: '2px solid black',
+              textDecoration: 'none',
+              display: 'block',
+              marginBottom: '12px'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                backgroundColor: '#10b981', 
+                borderRadius: '8px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: '20px'
+              }}>
+                👥
+              </div>
+              <div>
+                <h4 style={{ color: 'black', margin: '0 0 4px 0', fontSize: '14px' }}>Homeboy Industries</h4>
+                <p style={{ color: '#666', fontSize: '12px', margin: 0 }}>Jobs, education & healing community</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <h3 style={{ fontSize: '16px', marginBottom: '12px' }}>Official Resources</h3>
+        
+        <a 
+          href="tel:211"
           style={{ 
-            background: 'none', 
-            border: 'none', 
-            fontSize: '12px',
-            cursor: 'pointer',
-            textAlign: 'center'
+            backgroundColor: 'white', 
+            padding: '16px', 
+            borderRadius: '12px', 
+            border: '2px solid #10b981',
+            textDecoration: 'none',
+            display: 'block',
+            marginBottom: '12px'
           }}
         >
-          <div style={{ fontSize: '20px' }}>🏠</div>
-          Home
-        </button>
-        <button 
-          onClick={() => setCurrentScreen('chat')}
-          style={{ 
-            background: 'none', 
-            border: 'none', 
-            fontSize: '12px',
-            cursor: 'pointer',
-            textAlign: 'center',
-            fontWeight: 'bold'
-          }}
-        >
-          <div style={{ fontSize: '20px' }}>💬</div>
-          Support
-        </button>
-        <button 
-          onClick={() => setCurrentScreen('home')}
-          style={{ 
-            background: 'none', 
-            border: 'none', 
-            fontSize: '12px',
-            cursor: 'pointer',
-            textAlign: 'center'
-          }}
-        >
-          <div style={{ fontSize: '20px' }}>📋</div>
-          Resources
-        </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ 
+              width: '40px', 
+              height: '40px', 
+              backgroundColor: '#10b981', 
+              borderRadius: '8px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              color: 'white',
+              fontSize: '20px'
+            }}>
+              📞
+            </div>
+            <div>
+              <h4 style={{ color: 'black', margin: '0 0 4px 0', fontSize: '14px' }}>Call 211 - Emergency Help</h4>
+              <p style={{ color: '#666', fontSize: '12px', margin: 0 }}>24/7 housing and crisis support</p>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
   );
@@ -416,11 +484,77 @@ function App() {
       margin: '0 auto', 
       backgroundColor: 'white',
       minHeight: '100vh',
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: 'Arial, sans-serif',
+      position: 'relative'
     }}>
       {currentScreen === 'home' && <HomeScreen />}
       {currentScreen === 'dashboard' && <DashboardScreen />}
       {currentScreen === 'chat' && <ChatScreen />}
+      {currentScreen === 'resources' && <ResourcesScreen />}
+      
+      {/* Bottom Navigation - only show on main screens */}
+      {currentScreen !== 'home' && (
+        <div style={{ 
+          backgroundColor: 'white', 
+          borderTop: '2px solid black', 
+          padding: '15px', 
+          display: 'flex', 
+          justifyContent: 'space-around',
+          position: 'fixed',
+          bottom: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '100%',
+          maxWidth: '400px',
+          boxSizing: 'border-box'
+        }}>
+          <button 
+            onClick={() => setCurrentScreen('dashboard')}
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              fontSize: '12px',
+              cursor: 'pointer',
+              textAlign: 'center',
+              color: currentScreen === 'dashboard' ? 'black' : '#666',
+              fontWeight: currentScreen === 'dashboard' ? 'bold' : 'normal'
+            }}
+          >
+            <div style={{ fontSize: '20px' }}>🏠</div>
+            Home
+          </button>
+          <button 
+            onClick={() => setCurrentScreen('chat')}
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              fontSize: '12px',
+              cursor: 'pointer',
+              textAlign: 'center',
+              color: currentScreen === 'chat' ? 'black' : '#666',
+              fontWeight: currentScreen === 'chat' ? 'bold' : 'normal'
+            }}
+          >
+            <div style={{ fontSize: '20px' }}>💬</div>
+            Support
+          </button>
+          <button 
+            onClick={() => setCurrentScreen('resources')}
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              fontSize: '12px',
+              cursor: 'pointer',
+              textAlign: 'center',
+              color: currentScreen === 'resources' ? 'black' : '#666',
+              fontWeight: currentScreen === 'resources' ? 'bold' : 'normal'
+            }}
+          >
+            <div style={{ fontSize: '20px' }}>📋</div>
+            Resources
+          </button>
+        </div>
+      )}
     </div>
   );
 }
