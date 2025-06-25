@@ -70,7 +70,7 @@ function App() {
       
       <h1 style={{ fontSize: '32px', marginBottom: '10px' }}>Our Netwrkx</h1>
       <p style={{ fontSize: '16px', marginBottom: '40px', opacity: 0.9 }}>
-        Connect with LA's juvenile justice reentry services, shelters, and resources all in one place
+        Connect with LA's juvenile justice reentry services, housing, and resources all in one place
       </p>
       
       <button 
@@ -88,7 +88,7 @@ function App() {
           marginBottom: '15px'
         }}
       >
-        Find Shelter Now
+        Find Housing Now
       </button>
       
       <a 
