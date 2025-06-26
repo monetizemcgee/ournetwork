@@ -47,13 +47,14 @@ function App() {
   ];
 
   const HomeScreen = () => (
-    <div style={{ 
-      minHeight: '100vh',
-      background: 'linear-gradient(to bottom, #7f1d1d, #991b1b)',
-      padding: '40px 20px',
-      textAlign: 'center',
-      color: 'white'
-    }}>
+  <div style={{ 
+    minHeight: '100vh',
+    background: 'linear-gradient(to bottom, #7f1d1d, #991b1b)',
+    padding: '40px 20px',
+    textAlign: 'center',
+    color: 'white'
+  }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <div style={{ 
         width: '80px', 
         height: '80px', 
@@ -73,6 +74,98 @@ function App() {
         Connect with LA's juvenile justice reentry services, housing, and resources all in one place
       </p>
       
+      {/* 3 Feature Badges */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '40px', width: '100%' }}>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          color: 'white', 
+          backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+          backdropFilter: 'blur(4px)', 
+          borderRadius: '16px', 
+          padding: '16px', 
+          border: '1px solid rgba(255, 255, 255, 0.1)' 
+        }}>
+          <div style={{ 
+            width: '40px', 
+            height: '40px', 
+            backgroundColor: 'rgba(255, 255, 255, 0.15)', 
+            borderRadius: '12px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            marginRight: '16px',
+            color: 'white'
+          }}>
+            🏠
+          </div>
+          <div style={{ textAlign: 'left' }}>
+            <p style={{ fontWeight: 'bold', margin: 0 }}>Real-Time Housing Network</p>
+            <p style={{ fontSize: '14px', opacity: 0.8, margin: 0 }}>Find emergency & transitional housing</p>
+          </div>
+        </div>
+        
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          color: 'white', 
+          backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+          backdropFilter: 'blur(4px)', 
+          borderRadius: '16px', 
+          padding: '16px', 
+          border: '1px solid rgba(255, 255, 255, 0.1)' 
+        }}>
+          <div style={{ 
+            width: '40px', 
+            height: '40px', 
+            backgroundColor: 'rgba(255, 255, 255, 0.15)', 
+            borderRadius: '12px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            marginRight: '16px',
+            color: 'white'
+          }}>
+            📞
+          </div>
+          <div style={{ textAlign: 'left' }}>
+            <p style={{ fontWeight: 'bold', margin: 0 }}>24/7 Support Line</p>
+            <p style={{ fontSize: '14px', opacity: 0.8, margin: 0 }}>Call 211 for immediate help</p>
+          </div>
+        </div>
+        
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          color: 'white', 
+          backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+          backdropFilter: 'blur(4px)', 
+          borderRadius: '16px', 
+          padding: '16px', 
+          border: '1px solid rgba(255, 255, 255, 0.1)' 
+        }}>
+          <div style={{ 
+            width: '40px', 
+            height: '40px', 
+            backgroundColor: 'rgba(255, 255, 255, 0.15)', 
+            borderRadius: '12px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            marginRight: '16px',
+            color: 'white'
+          }}>
+            ⚠️
+          </div>
+          <div style={{ textAlign: 'left' }}>
+            <p style={{ fontWeight: 'bold', margin: 0 }}>Emergency Weather Alerts</p>
+            <p style={{ fontSize: '14px', opacity: 0.8, margin: 0 }}>Get notified of housing activations</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <button 
         onClick={() => setCurrentScreen('dashboard')}
         style={{
@@ -111,8 +204,8 @@ function App() {
         Call 211 for Help
       </a>
     </div>
-  );
-
+  </div>
+);
   const DashboardScreen = () => (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(to bottom, #7f1d1d, #f5f5f5)', paddingBottom: '80px' }}>
       <div style={{ backgroundColor: 'black', padding: '24px' }}>
