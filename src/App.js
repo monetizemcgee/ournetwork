@@ -171,23 +171,23 @@ function App() {
     {/* Buttons moved to bottom */}
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <button 
-        onClick={() => setCurrentScreen('dashboard')}
-        style={{
-          width: '100%',
-          backgroundColor: 'white',
-          color: 'black',
-          fontWeight: 'bold',
-          padding: '20px 24px',
-          borderRadius: '16px',
-          border: 'none',
-          fontSize: '16px',
-          cursor: 'pointer',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-          transition: 'all 0.3s ease'
-        }}
-      >
-        Find Resources Now
-      </button>
+  onClick={() => setCurrentScreen('dashboard')}
+  style={{
+    width: '100%',
+    backgroundColor: 'white',
+    color: 'black',
+    fontWeight: 'bold',
+    padding: '20px 24px',
+    borderRadius: '16px',
+    border: 'none',
+    fontSize: '16px',
+    cursor: 'pointer',
+    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+    transition: 'all 0.3s ease'
+  }}
+>
+  Find Resources
+</button>
       
       <a 
         href="tel:211"
