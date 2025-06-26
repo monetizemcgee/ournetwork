@@ -1016,7 +1016,7 @@ function App() {
            }}
          >
            <span style={{ fontSize: '20px' }}>📍</span>
-           <span style={{ fontSize: '12px' }}>Housing</span>
+           <span style={{ fontSize: '12px' }}>Map</span>
          </button>
          <button 
            onClick={() => setCurrentScreen('chat')}
