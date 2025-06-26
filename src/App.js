@@ -50,9 +50,12 @@ function App() {
   <div style={{ 
     minHeight: '100vh',
     background: 'linear-gradient(to bottom, #7f1d1d, #991b1b)',
-    padding: '40px 20px',
+    padding: '32px', 
     textAlign: 'center',
-    color: 'white'
+    color: 'white',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   }}>
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <div style={{ 
@@ -155,16 +158,17 @@ function App() {
             marginRight: '16px',
             color: 'white'
           }}>
-            ⚠️
+            💬
           </div>
           <div style={{ textAlign: 'left' }}>
-            <p style={{ fontWeight: 'bold', margin: 0 }}>Emergency Weather Alerts</p>
-            <p style={{ fontSize: '14px', opacity: 0.8, margin: 0 }}>Get notified of housing activations</p>
+            <p style={{ fontWeight: 'bold', margin: 0 }}>Credible Messengers</p>
+            <p style={{ fontSize: '14px', opacity: 0.8, margin: 0 }}>Peer support and guidance</p>
           </div>
         </div>
       </div>
     </div>
 
+    {/* Buttons moved to bottom */}
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <button 
         onClick={() => setCurrentScreen('dashboard')}
@@ -173,12 +177,13 @@ function App() {
           backgroundColor: 'white',
           color: 'black',
           fontWeight: 'bold',
-          padding: '15px',
-          borderRadius: '10px',
+          padding: '20px 24px',
+          borderRadius: '16px',
           border: 'none',
           fontSize: '16px',
           cursor: 'pointer',
-          marginBottom: '15px'
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          transition: 'all 0.3s ease'
         }}
       >
         Find Housing Now
@@ -187,17 +192,18 @@ function App() {
       <a 
         href="tel:211"
         style={{
-          display: 'block',
           width: '100%',
           backgroundColor: 'transparent',
           color: 'white',
           fontWeight: 'bold',
-          padding: '15px',
-          borderRadius: '10px',
+          padding: '20px 24px',
+          borderRadius: '16px',
           border: '2px solid white',
           fontSize: '16px',
           textDecoration: 'none',
+          display: 'block',
           textAlign: 'center',
+          transition: 'all 0.3s ease',
           boxSizing: 'border-box'
         }}
       >
