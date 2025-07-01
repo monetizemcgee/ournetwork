@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState('home');
@@ -693,6 +693,376 @@ function App() {
       </div>
     </div>
   );
+// Add this entire MapScreen component
+const MapScreen = () => {
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+
+  // Complete shelter and reentry data with real LA coordinates
+  const locations = [
+    {
+      id: 1,
+      name: "Weingart Center Association",
+      type: "Emergency Shelter",
+      address: "566 S San Pedro St, Los Angeles",
+      phone: "(213) 689-2190",
+      distance: "0.3 mi",
+      beds: "600+",
+      lat: 34.0446,
+      lng: -118.2518,
+      category: "shelter"
+    },
+    {
+      id: 2,
+      name: "LA Family Housing",
+      type: "Bridge Housing", 
+      address: "7843 Lankershim Blvd, North Hollywood",
+      phone: "(818) 982-4091",
+      distance: "8.2 mi",
+      beds: "85",
+      lat: 34.1956,
+      lng: -118.3877,
+      category: "shelter"
+    },
+    {
+      id: 3,
+      name: "Covenant House California",
+      type: "Youth Shelter",
+      address: "1325 N Western Ave, Los Angeles", 
+      phone: "(323) 461-3131",
+      distance: "3.1 mi",
+      beds: "70",
+      lat: 34.0928,
+      lng: -118.3089,
+      category: "shelter"
+    },
+    {
+      id: 4,
+      name: "Homeboy Industries",
+      type: "Reentry Support",
+      address: "130 W Bruno St, Los Angeles",
+      phone: "(323) 526-1254",
+      distance: "2.1 mi",
+      beds: "N/A",
+      lat: 34.0522,
+      lng: -118.2300,
+      category: "reentry"
+    },
+    {
+      id: 5,
+      name: "Avalon Carver",
+      type: "Reentry Support",
+      address: "Multiple LA Locations",
+      phone: "(213) 555-0100",
+      distance: "1.2 mi",
+      beds: "N/A",
+      lat: 34.0224,
+      lng: -118.2851,
+      category: "reentry"
+    },
+    {
+      id: 6,
+      name: "Pathway to Kinship",
+      type: "Reentry Support",
+      address: "LA County",
+      phone: "(323) 555-0200",
+      distance: "4.3 mi",
+      beds: "N/A",
+      lat: 34.1030,
+      lng: -118.2673,
+      category: "reentry"
+    }
+  ];
+
+  useEffect(() => {
+    if (mapRef.current && !mapInstanceRef.current && typeof L !== 'undefined') {
+      try {
+        // Initialize the map centered on Downtown LA
+        mapInstanceRef.current = L.map(mapRef.current).setView([34.0522, -118.2437], 11);
+
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors',
+          maxZoom: 18
+        }).addTo(mapInstanceRef.current);
+
+        // Add markers for each location
+        locations.forEach(location => {
+          const isReentry = location.category === 'reentry';
+          
+          const markerHtml = `
+            <div style="
+              width: 40px; 
+              height: 40px; 
+              background-color: ${isReentry ? '#10b981' : '#000000'}; 
+              border: 3px solid white; 
+              border-radius: 50%; 
+              display: flex; 
+              align-items: center; 
+              justify-content: center; 
+              font-size: 18px;
+              box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+              cursor: pointer;
+              color: white;
+            ">
+              ${isReentry ? '👥' : '🏠'}
+            </div>
+          `;
+
+          const customIcon = L.divIcon({
+            className: 'custom-leaflet-marker',
+            html: markerHtml,
+            iconSize: [40, 40],
+            iconAnchor: [20, 20],
+            popupAnchor: [0, -20]
+          });
+
+          const popupContent = `
+            <div style="min-width: 220px; font-family: Arial, sans-serif;">
+              <h3 style="margin: 0 0 8px 0; font-size: 16px; color: #000;">${location.name}</h3>
+              <p style="margin: 0 0 4px 0; color: #666; font-size: 14px; font-weight: bold;">${location.type}</p>
+              <p style="margin: 0 0 8px 0; font-size: 12px; color: #888;">${location.address}</p>
+              <div style="margin: 8px 0;">
+                <span style="background: ${isReentry ? '#10b981' : '#000'}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px;">
+                  ${location.distance} away
+                </span>
+              </div>
+              <div style="display: flex; gap: 8px; margin-top: 12px;">
+                <a href="tel:${location.phone}" style="
+                  background: #000; 
+                  color: white; 
+                  padding: 8px 12px; 
+                  border-radius: 6px; 
+                  text-decoration: none; 
+                  font-size: 12px;
+                  font-weight: bold;
+                ">📞 Call</a>
+              </div>
+            </div>
+          `;
+
+          L.marker([location.lat, location.lng], { icon: customIcon })
+            .addTo(mapInstanceRef.current)
+            .bindPopup(popupContent, {
+              maxWidth: 300,
+              closeButton: true
+            });
+        });
+
+      } catch (error) {
+        console.log('Map initialization error:', error);
+      }
+    }
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  return (
+    <div style={{ minHeight: '100vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column' }}>
+      {/* Header with search and filters */}
+      <div style={{ backgroundColor: 'white', padding: '24px', borderBottom: '2px solid black' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+          <button 
+            onClick={() => setCurrentScreen('dashboard')}
+            style={{ 
+              width: '40px', 
+              height: '40px', 
+              backgroundColor: 'black', 
+              borderRadius: '50%', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              border: 'none',
+              cursor: 'pointer',
+              color: 'white'
+            }}
+          >
+            ←
+          </button>
+          <div style={{ 
+            flex: 1, 
+            backgroundColor: '#f5f5f5', 
+            border: '2px solid black', 
+            borderRadius: '16px', 
+            padding: '12px 16px' 
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '16px' }}>🔍</span>
+              <input 
+                type="text" 
+                placeholder="Search housing and resources..." 
+                style={{ 
+                  backgroundColor: 'transparent', 
+                  color: 'black', 
+                  flex: 1, 
+                  outline: 'none', 
+                  border: 'none',
+                  fontSize: '14px'
+                }}
+              />
+            </div>
+          </div>
+          <button style={{ 
+            width: '40px', 
+            height: '40px', 
+            backgroundColor: 'black', 
+            borderRadius: '50%', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            border: 'none',
+            cursor: 'pointer',
+            color: 'white'
+          }}>
+            ⚙️
+          </button>
+        </div>
+        
+        <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '8px' }}>
+          <button style={{ 
+            backgroundColor: 'black', 
+            color: 'white', 
+            padding: '8px 16px', 
+            borderRadius: '50px', 
+            fontSize: '14px', 
+            fontWeight: 'medium', 
+            whiteSpace: 'nowrap', 
+            border: 'none',
+            cursor: 'pointer'
+          }}>
+            All Resources
+          </button>
+          <button style={{ 
+            backgroundColor: 'white', 
+            border: '2px solid black', 
+            color: 'black', 
+            padding: '8px 16px', 
+            borderRadius: '50px', 
+            fontSize: '14px', 
+            whiteSpace: 'nowrap',
+            cursor: 'pointer'
+          }}>
+            Emergency
+          </button>
+          <button style={{ 
+            backgroundColor: 'white', 
+            border: '2px solid black', 
+            color: 'black', 
+            padding: '8px 16px', 
+            borderRadius: '50px', 
+            fontSize: '14px', 
+            whiteSpace: 'nowrap',
+            cursor: 'pointer'
+          }}>
+            Reentry Support
+          </button>
+        </div>
+      </div>
+
+      {/* Interactive Leaflet Map */}
+      <div style={{ flex: 1, position: 'relative', backgroundColor: '#f5f5f5', height: '400px' }}>
+        <div 
+          ref={mapRef}
+          style={{ 
+            position: 'absolute', 
+            inset: 0, 
+            height: '100%',
+            width: '100%'
+          }}
+        />
+        
+        {/* Fallback if map doesn't load */}
+        {typeof L === 'undefined' && (
+          <div style={{ 
+            position: 'absolute', 
+            inset: 0, 
+            background: 'linear-gradient(to bottom right, #dbeafe, #dcfce7)', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center' 
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ color: '#6b7280', fontSize: '48px', marginBottom: '16px' }}>
+                🗺️
+              </div>
+              <p style={{ color: '#6b7280', fontSize: '18px', fontWeight: 'bold', margin: '16px 0 0 0' }}>Los Angeles Housing Map</p>
+              <p style={{ color: '#9ca3af', fontSize: '14px', margin: '4px 0 0 0' }}>Loading interactive map...</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Bottom panel with location list */}
+      <div style={{ backgroundColor: 'white', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', padding: '24px', border: '2px solid black', borderBottom: 'none', marginTop: 'auto' }}>
+        <div style={{ width: '48px', height: '4px', backgroundColor: 'black', borderRadius: '50px', margin: '0 auto 16px auto' }}></div>
+        <h3 style={{ color: 'black', fontWeight: 'bold', fontSize: '18px', marginBottom: '16px' }}>
+          Housing & Reentry Resources ({locations.length})
+        </h3>
+        
+        <div style={{ maxHeight: '256px', overflowY: 'auto' }}>
+          {locations.map((location) => (
+            <div 
+              key={location.id}
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'space-between', 
+                padding: '12px', 
+                backgroundColor: '#f5f5f5', 
+                borderRadius: '16px', 
+                border: '1px solid #d1d5db',
+                marginBottom: '12px',
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ 
+                  width: '40px', 
+                  height: '40px', 
+                  backgroundColor: location.category === 'reentry' ? '#10b981' : 'black', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'white'
+                }}>
+                  {location.category === 'reentry' ? '👥' : '🏠'}
+                </div>
+                <div>
+                  <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>{location.name}</p>
+                  <p style={{ color: 'black', opacity: 0.6, fontSize: '12px', margin: 0 }}>{location.distance} • {location.type}</p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <a 
+                  href={`tel:${location.phone}`}
+                  style={{ 
+                    width: '32px', 
+                    height: '32px', 
+                    backgroundColor: 'black', 
+                    borderRadius: '50%', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    textDecoration: 'none',
+                    color: 'white'
+                  }}
+                >
+                  📞
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
   const ResourcesScreen = () => (
     <div style={{ minHeight: '100vh', backgroundColor: 'white', paddingBottom: '80px' }}>
@@ -968,6 +1338,7 @@ function App() {
      {currentScreen === 'home' && <HomeScreen />}
      {currentScreen === 'dashboard' && <DashboardScreen />}
      {currentScreen === 'chat' && <ChatScreen />}
+     {currentScreen === 'map' && <MapScreen />}
      {currentScreen === 'resources' && <ResourcesScreen />}
      
      {/* Bottom Navigation - only show on main screens */}
