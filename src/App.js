@@ -920,17 +920,9 @@ const locations = [
 
         // Add markers for each location
         locations.forEach(location => {
-          const getMarkerStyle = (category) => {
-  switch(category) {
-    case 'reentry': return { color: '#10b981', icon: '👥' };
-    case 'legal': return { color: '#8b5cf6', icon: '⚖️' };
-    case 'food': return { color: '#f59e0b', icon: '🍽️' };
-    case 'health': return { color: '#3b82f6', icon: '🏥' };
-    default: return { color: '#000000', icon: '🏠' }; // shelter
-  }
-};
-
-const markerStyle = getMarkerStyle(location.category);
+        
+  switch(location.category) {
+  
           
           const markerHtml = `
             <div style="
