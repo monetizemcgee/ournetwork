@@ -698,82 +698,214 @@ const MapScreen = () => {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
 
-  // Complete shelter and reentry data with real LA coordinates
-  const locations = [
-    {
-      id: 1,
-      name: "Weingart Center Association",
-      type: "Emergency Shelter",
-      address: "566 S San Pedro St, Los Angeles",
-      phone: "(213) 689-2190",
-      distance: "0.3 mi",
-      beds: "600+",
-      lat: 34.0446,
-      lng: -118.2518,
-      category: "shelter"
-    },
-    {
-      id: 2,
-      name: "LA Family Housing",
-      type: "Bridge Housing", 
-      address: "7843 Lankershim Blvd, North Hollywood",
-      phone: "(818) 982-4091",
-      distance: "8.2 mi",
-      beds: "85",
-      lat: 34.1956,
-      lng: -118.3877,
-      category: "shelter"
-    },
-    {
-      id: 3,
-      name: "Covenant House California",
-      type: "Youth Shelter",
-      address: "1325 N Western Ave, Los Angeles", 
-      phone: "(323) 461-3131",
-      distance: "3.1 mi",
-      beds: "70",
-      lat: 34.0928,
-      lng: -118.3089,
-      category: "shelter"
-    },
-    {
-      id: 4,
-      name: "Homeboy Industries",
-      type: "Reentry Support",
-      address: "130 W Bruno St, Los Angeles",
-      phone: "(323) 526-1254",
-      distance: "2.1 mi",
-      beds: "N/A",
-      lat: 34.0522,
-      lng: -118.2300,
-      category: "reentry"
-    },
-    {
-      id: 5,
-      name: "Avalon Carver",
-      type: "Reentry Support",
-      address: "Multiple LA Locations",
-      phone: "(213) 555-0100",
-      distance: "1.2 mi",
-      beds: "N/A",
-      lat: 34.0224,
-      lng: -118.2851,
-      category: "reentry"
-    },
-    {
-      id: 6,
-      name: "Pathway to Kinship",
-      type: "Reentry Support",
-      address: "LA County",
-      phone: "(323) 555-0200",
-      distance: "4.3 mi",
-      beds: "N/A",
-      lat: 34.1030,
-      lng: -118.2673,
-      category: "reentry"
-    }
-  ];
-
+  // Complete shelter, reentry, and community support data with real LA coordinates
+const locations = [
+  // EXISTING HOUSING & REENTRY (keep these)
+  {
+    id: 1,
+    name: "Weingart Center Association",
+    type: "Emergency Shelter",
+    address: "566 S San Pedro St, Los Angeles",
+    phone: "(213) 689-2190",
+    distance: "0.3 mi",
+    beds: "600+",
+    lat: 34.0446,
+    lng: -118.2518,
+    category: "shelter"
+  },
+  {
+    id: 2,
+    name: "LA Family Housing",
+    type: "Bridge Housing", 
+    address: "7843 Lankershim Blvd, North Hollywood",
+    phone: "(818) 982-4091",
+    distance: "8.2 mi",
+    beds: "85",
+    lat: 34.1956,
+    lng: -118.3877,
+    category: "shelter"
+  },
+  {
+    id: 3,
+    name: "Covenant House California",
+    type: "Youth Shelter",
+    address: "1325 N Western Ave, Los Angeles", 
+    phone: "(323) 461-3131",
+    distance: "3.1 mi",
+    beds: "70",
+    lat: 34.0928,
+    lng: -118.3089,
+    category: "shelter"
+  },
+  {
+    id: 4,
+    name: "Homeboy Industries",
+    type: "Reentry Support",
+    address: "130 W Bruno St, Los Angeles",
+    phone: "(323) 526-1254",
+    distance: "2.1 mi",
+    beds: "N/A",
+    lat: 34.0522,
+    lng: -118.2300,
+    category: "reentry"
+  },
+  {
+    id: 5,
+    name: "Avalon Carver",
+    type: "Reentry Support",
+    address: "Multiple LA Locations",
+    phone: "(213) 555-0100",
+    distance: "1.2 mi",
+    beds: "N/A",
+    lat: 34.0224,
+    lng: -118.2851,
+    category: "reentry"
+  },
+  {
+    id: 6,
+    name: "Pathway to Kinship",
+    type: "Reentry Support",
+    address: "LA County",
+    phone: "(323) 555-0200",
+    distance: "4.3 mi",
+    beds: "N/A",
+    lat: 34.1030,
+    lng: -118.2673,
+    category: "reentry"
+  },
+  
+  // NEW EXPUNGEMENT CLINICS
+  {
+    id: 7,
+    name: "Public Counsel Law Center",
+    type: "Expungement Clinic",
+    address: "610 S Ardmore Ave, Los Angeles",
+    phone: "(213) 385-2977",
+    distance: "3.8 mi",
+    beds: "N/A",
+    services: ["Free expungement clinics", "Record clearing", "Legal consultation"],
+    hours: "Mon-Fri 9AM-5PM",
+    lat: 34.0619,
+    lng: -118.3089,
+    category: "legal"
+  },
+  {
+    id: 8,
+    name: "Legal Aid Foundation of Los Angeles",
+    type: "Expungement Clinic",
+    address: "1102 Crenshaw Blvd, Los Angeles",
+    phone: "(323) 801-7991",
+    distance: "6.2 mi",
+    beds: "N/A",
+    services: ["Criminal record relief", "Expungement assistance", "Legal workshops"],
+    hours: "Mon-Fri 8:30AM-5PM",
+    lat: 34.0522,
+    lng: -118.3270,
+    category: "legal"
+  },
+  {
+    id: 9,
+    name: "Neighborhood Legal Services",
+    type: "Expungement Clinic",
+    address: "13327 Van Nuys Blvd, Pacoima",
+    phone: "(818) 896-5211",
+    distance: "18.5 mi",
+    beds: "N/A",
+    services: ["Expungement workshops", "Legal aid", "Document preparation"],
+    hours: "Mon-Fri 9AM-5PM",
+    lat: 34.2606,
+    lng: -118.4511,
+    category: "legal"
+  },
+  
+  // NEW FOOD BANKS
+  {
+    id: 10,
+    name: "Los Angeles Regional Food Bank",
+    type: "Food Bank",
+    address: "1734 E 41st St, Los Angeles",
+    phone: "(323) 234-3030",
+    distance: "4.1 mi",
+    beds: "N/A",
+    services: ["Food distribution", "Emergency food boxes", "Mobile food pantry"],
+    hours: "Mon-Fri 8AM-4PM",
+    lat: 34.0089,
+    lng: -118.2230,
+    category: "food"
+  },
+  {
+    id: 11,
+    name: "Union Rescue Mission",
+    type: "Food Bank",
+    address: "545 S San Pedro St, Los Angeles",
+    phone: "(213) 347-6300",
+    distance: "0.5 mi",
+    beds: "N/A",
+    services: ["Daily meals", "Food pantry", "Emergency assistance"],
+    hours: "Daily 7AM-7PM",
+    lat: 34.0429,
+    lng: -118.2516,
+    category: "food"
+  },
+  {
+    id: 12,
+    name: "St. Vincent de Paul Center",
+    type: "Food Bank",
+    address: "2123 Valencia St, Los Angeles",
+    phone: "(323) 224-6280",
+    distance: "3.7 mi",
+    beds: "N/A",
+    services: ["Food pantry", "Emergency assistance", "Clothing closet"],
+    hours: "Mon-Fri 9AM-4PM",
+    lat: 34.0736,
+    lng: -118.2186,
+    category: "food"
+  },
+  
+  // NEW COMMUNITY HEALTH CENTERS
+  {
+    id: 13,
+    name: "AltaMed Health Services",
+    type: "Community Health Center",
+    address: "2040 Camfield Ave, Los Angeles",
+    phone: "(323) 728-7300",
+    distance: "5.8 mi",
+    beds: "N/A",
+    services: ["Primary care", "Behavioral health", "Dental", "Pharmacy"],
+    hours: "Mon-Fri 7AM-8PM, Sat 8AM-5PM",
+    lat: 34.0479,
+    lng: -118.1718,
+    category: "health"
+  },
+  {
+    id: 14,
+    name: "Northeast Valley Health Corporation",
+    type: "Community Health Center",
+    address: "11200 Nordhoff St, San Fernando",
+    phone: "(818) 896-8621",
+    distance: "22.1 mi",
+    beds: "N/A",
+    services: ["Medical", "Dental", "Mental health", "WIC program"],
+    hours: "Mon-Fri 7AM-7PM, Sat 8AM-4PM",
+    lat: 34.2394,
+    lng: -118.4398,
+    category: "health"
+  },
+  {
+    id: 15,
+    name: "Venice Family Clinic",
+    type: "Community Health Center",
+    address: "604 Rose Ave, Venice",
+    phone: "(310) 392-8636",
+    distance: "16.3 mi",
+    beds: "N/A",
+    services: ["Primary care", "Mental health", "Homeless services", "Dental"],
+    hours: "Mon-Fri 8AM-6PM, Sat 8AM-12PM",
+    lat: 34.0165,
+    lng: -118.4719,
+    category: "health"
+  }
+];
   useEffect(() => {
     if (mapRef.current && !mapInstanceRef.current && typeof L !== 'undefined') {
       try {
@@ -788,13 +920,23 @@ const MapScreen = () => {
 
         // Add markers for each location
         locations.forEach(location => {
-          const isReentry = location.category === 'reentry';
+          const getMarkerStyle = (category) => {
+  switch(category) {
+    case 'reentry': return { color: '#10b981', icon: '👥' };
+    case 'legal': return { color: '#8b5cf6', icon: '⚖️' };
+    case 'food': return { color: '#f59e0b', icon: '🍽️' };
+    case 'health': return { color: '#3b82f6', icon: '🏥' };
+    default: return { color: '#000000', icon: '🏠' }; // shelter
+  }
+};
+
+const markerStyle = getMarkerStyle(location.category);
           
           const markerHtml = `
             <div style="
               width: 40px; 
               height: 40px; 
-              background-color: ${isReentry ? '#10b981' : '#000000'}; 
+              background-color: ${markerStyle.color};
               border: 3px solid white; 
               border-radius: 50%; 
               display: flex; 
@@ -805,7 +947,7 @@ const MapScreen = () => {
               cursor: pointer;
               color: white;
             ">
-              ${isReentry ? '👥' : '🏠'}
+              ${markerStyle.icon}
             </div>
           `;
 
