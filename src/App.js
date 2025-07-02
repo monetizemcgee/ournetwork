@@ -694,218 +694,221 @@ function App() {
     </div>
   );
 // Add this entire MapScreen component
+// Fixed MapScreen component - replace the existing MapScreen in your App.js
+
 const MapScreen = () => {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
 
   // Complete shelter, reentry, and community support data with real LA coordinates
-const locations = [
-  // EXISTING HOUSING & REENTRY (keep these)
-  {
-    id: 1,
-    name: "Weingart Center Association",
-    type: "Emergency Shelter",
-    address: "566 S San Pedro St, Los Angeles",
-    phone: "(213) 689-2190",
-    distance: "0.3 mi",
-    beds: "600+",
-    lat: 34.0446,
-    lng: -118.2518,
-    category: "shelter"
-  },
-  {
-    id: 2,
-    name: "LA Family Housing",
-    type: "Bridge Housing", 
-    address: "7843 Lankershim Blvd, North Hollywood",
-    phone: "(818) 982-4091",
-    distance: "8.2 mi",
-    beds: "85",
-    lat: 34.1956,
-    lng: -118.3877,
-    category: "shelter"
-  },
-  {
-    id: 3,
-    name: "Covenant House California",
-    type: "Youth Shelter",
-    address: "1325 N Western Ave, Los Angeles", 
-    phone: "(323) 461-3131",
-    distance: "3.1 mi",
-    beds: "70",
-    lat: 34.0928,
-    lng: -118.3089,
-    category: "shelter"
-  },
-  {
-    id: 4,
-    name: "Homeboy Industries",
-    type: "Reentry Support",
-    address: "130 W Bruno St, Los Angeles",
-    phone: "(323) 526-1254",
-    distance: "2.1 mi",
-    beds: "N/A",
-    lat: 34.0522,
-    lng: -118.2300,
-    category: "reentry"
-  },
-  {
-    id: 5,
-    name: "Avalon Carver",
-    type: "Reentry Support",
-    address: "Multiple LA Locations",
-    phone: "(213) 555-0100",
-    distance: "1.2 mi",
-    beds: "N/A",
-    lat: 34.0224,
-    lng: -118.2851,
-    category: "reentry"
-  },
-  {
-    id: 6,
-    name: "Pathway to Kinship",
-    type: "Reentry Support",
-    address: "LA County",
-    phone: "(323) 555-0200",
-    distance: "4.3 mi",
-    beds: "N/A",
-    lat: 34.1030,
-    lng: -118.2673,
-    category: "reentry"
-  },
-  
-  // NEW EXPUNGEMENT CLINICS
-  {
-    id: 7,
-    name: "Public Counsel Law Center",
-    type: "Expungement Clinic",
-    address: "610 S Ardmore Ave, Los Angeles",
-    phone: "(213) 385-2977",
-    distance: "3.8 mi",
-    beds: "N/A",
-    services: ["Free expungement clinics", "Record clearing", "Legal consultation"],
-    hours: "Mon-Fri 9AM-5PM",
-    lat: 34.0619,
-    lng: -118.3089,
-    category: "legal"
-  },
-  {
-    id: 8,
-    name: "Legal Aid Foundation of Los Angeles",
-    type: "Expungement Clinic",
-    address: "1102 Crenshaw Blvd, Los Angeles",
-    phone: "(323) 801-7991",
-    distance: "6.2 mi",
-    beds: "N/A",
-    services: ["Criminal record relief", "Expungement assistance", "Legal workshops"],
-    hours: "Mon-Fri 8:30AM-5PM",
-    lat: 34.0522,
-    lng: -118.3270,
-    category: "legal"
-  },
-  {
-    id: 9,
-    name: "Neighborhood Legal Services",
-    type: "Expungement Clinic",
-    address: "13327 Van Nuys Blvd, Pacoima",
-    phone: "(818) 896-5211",
-    distance: "18.5 mi",
-    beds: "N/A",
-    services: ["Expungement workshops", "Legal aid", "Document preparation"],
-    hours: "Mon-Fri 9AM-5PM",
-    lat: 34.2606,
-    lng: -118.4511,
-    category: "legal"
-  },
-  
-  // NEW FOOD BANKS
-  {
-    id: 10,
-    name: "Los Angeles Regional Food Bank",
-    type: "Food Bank",
-    address: "1734 E 41st St, Los Angeles",
-    phone: "(323) 234-3030",
-    distance: "4.1 mi",
-    beds: "N/A",
-    services: ["Food distribution", "Emergency food boxes", "Mobile food pantry"],
-    hours: "Mon-Fri 8AM-4PM",
-    lat: 34.0089,
-    lng: -118.2230,
-    category: "food"
-  },
-  {
-    id: 11,
-    name: "Union Rescue Mission",
-    type: "Food Bank",
-    address: "545 S San Pedro St, Los Angeles",
-    phone: "(213) 347-6300",
-    distance: "0.5 mi",
-    beds: "N/A",
-    services: ["Daily meals", "Food pantry", "Emergency assistance"],
-    hours: "Daily 7AM-7PM",
-    lat: 34.0429,
-    lng: -118.2516,
-    category: "food"
-  },
-  {
-    id: 12,
-    name: "St. Vincent de Paul Center",
-    type: "Food Bank",
-    address: "2123 Valencia St, Los Angeles",
-    phone: "(323) 224-6280",
-    distance: "3.7 mi",
-    beds: "N/A",
-    services: ["Food pantry", "Emergency assistance", "Clothing closet"],
-    hours: "Mon-Fri 9AM-4PM",
-    lat: 34.0736,
-    lng: -118.2186,
-    category: "food"
-  },
-  
-  // NEW COMMUNITY HEALTH CENTERS
-  {
-    id: 13,
-    name: "AltaMed Health Services",
-    type: "Community Health Center",
-    address: "2040 Camfield Ave, Los Angeles",
-    phone: "(323) 728-7300",
-    distance: "5.8 mi",
-    beds: "N/A",
-    services: ["Primary care", "Behavioral health", "Dental", "Pharmacy"],
-    hours: "Mon-Fri 7AM-8PM, Sat 8AM-5PM",
-    lat: 34.0479,
-    lng: -118.1718,
-    category: "health"
-  },
-  {
-    id: 14,
-    name: "Northeast Valley Health Corporation",
-    type: "Community Health Center",
-    address: "11200 Nordhoff St, San Fernando",
-    phone: "(818) 896-8621",
-    distance: "22.1 mi",
-    beds: "N/A",
-    services: ["Medical", "Dental", "Mental health", "WIC program"],
-    hours: "Mon-Fri 7AM-7PM, Sat 8AM-4PM",
-    lat: 34.2394,
-    lng: -118.4398,
-    category: "health"
-  },
-  {
-    id: 15,
-    name: "Venice Family Clinic",
-    type: "Community Health Center",
-    address: "604 Rose Ave, Venice",
-    phone: "(310) 392-8636",
-    distance: "16.3 mi",
-    beds: "N/A",
-    services: ["Primary care", "Mental health", "Homeless services", "Dental"],
-    hours: "Mon-Fri 8AM-6PM, Sat 8AM-12PM",
-    lat: 34.0165,
-    lng: -118.4719,
-    category: "health"
-  }
-];
+  const locations = [
+    // EXISTING HOUSING & REENTRY (keep these)
+    {
+      id: 1,
+      name: "Weingart Center Association",
+      type: "Emergency Shelter",
+      address: "566 S San Pedro St, Los Angeles",
+      phone: "(213) 689-2190",
+      distance: "0.3 mi",
+      beds: "600+",
+      lat: 34.0446,
+      lng: -118.2518,
+      category: "shelter"
+    },
+    {
+      id: 2,
+      name: "LA Family Housing",
+      type: "Bridge Housing", 
+      address: "7843 Lankershim Blvd, North Hollywood",
+      phone: "(818) 982-4091",
+      distance: "8.2 mi",
+      beds: "85",
+      lat: 34.1956,
+      lng: -118.3877,
+      category: "shelter"
+    },
+    {
+      id: 3,
+      name: "Covenant House California",
+      type: "Youth Shelter",
+      address: "1325 N Western Ave, Los Angeles", 
+      phone: "(323) 461-3131",
+      distance: "3.1 mi",
+      beds: "70",
+      lat: 34.0928,
+      lng: -118.3089,
+      category: "shelter"
+    },
+    {
+      id: 4,
+      name: "Homeboy Industries",
+      type: "Reentry Support",
+      address: "130 W Bruno St, Los Angeles",
+      phone: "(323) 526-1254",
+      distance: "2.1 mi",
+      beds: "N/A",
+      lat: 34.0522,
+      lng: -118.2300,
+      category: "reentry"
+    },
+    {
+      id: 5,
+      name: "Avalon Carver",
+      type: "Reentry Support",
+      address: "Multiple LA Locations",
+      phone: "(213) 555-0100",
+      distance: "1.2 mi",
+      beds: "N/A",
+      lat: 34.0224,
+      lng: -118.2851,
+      category: "reentry"
+    },
+    {
+      id: 6,
+      name: "Pathway to Kinship",
+      type: "Reentry Support",
+      address: "LA County",
+      phone: "(323) 555-0200",
+      distance: "4.3 mi",
+      beds: "N/A",
+      lat: 34.1030,
+      lng: -118.2673,
+      category: "reentry"
+    },
+    
+    // NEW EXPUNGEMENT CLINICS
+    {
+      id: 7,
+      name: "Public Counsel Law Center",
+      type: "Expungement Clinic",
+      address: "610 S Ardmore Ave, Los Angeles",
+      phone: "(213) 385-2977",
+      distance: "3.8 mi",
+      beds: "N/A",
+      services: ["Free expungement clinics", "Record clearing", "Legal consultation"],
+      hours: "Mon-Fri 9AM-5PM",
+      lat: 34.0619,
+      lng: -118.3089,
+      category: "legal"
+    },
+    {
+      id: 8,
+      name: "Legal Aid Foundation of Los Angeles",
+      type: "Expungement Clinic",
+      address: "1102 Crenshaw Blvd, Los Angeles",
+      phone: "(323) 801-7991",
+      distance: "6.2 mi",
+      beds: "N/A",
+      services: ["Criminal record relief", "Expungement assistance", "Legal workshops"],
+      hours: "Mon-Fri 8:30AM-5PM",
+      lat: 34.0522,
+      lng: -118.3270,
+      category: "legal"
+    },
+    {
+      id: 9,
+      name: "Neighborhood Legal Services",
+      type: "Expungement Clinic",
+      address: "13327 Van Nuys Blvd, Pacoima",
+      phone: "(818) 896-5211",
+      distance: "18.5 mi",
+      beds: "N/A",
+      services: ["Expungement workshops", "Legal aid", "Document preparation"],
+      hours: "Mon-Fri 9AM-5PM",
+      lat: 34.2606,
+      lng: -118.4511,
+      category: "legal"
+    },
+    
+    // NEW FOOD BANKS
+    {
+      id: 10,
+      name: "Los Angeles Regional Food Bank",
+      type: "Food Bank",
+      address: "1734 E 41st St, Los Angeles",
+      phone: "(323) 234-3030",
+      distance: "4.1 mi",
+      beds: "N/A",
+      services: ["Food distribution", "Emergency food boxes", "Mobile food pantry"],
+      hours: "Mon-Fri 8AM-4PM",
+      lat: 34.0089,
+      lng: -118.2230,
+      category: "food"
+    },
+    {
+      id: 11,
+      name: "Union Rescue Mission",
+      type: "Food Bank",
+      address: "545 S San Pedro St, Los Angeles",
+      phone: "(213) 347-6300",
+      distance: "0.5 mi",
+      beds: "N/A",
+      services: ["Daily meals", "Food pantry", "Emergency assistance"],
+      hours: "Daily 7AM-7PM",
+      lat: 34.0429,
+      lng: -118.2516,
+      category: "food"
+    },
+    {
+      id: 12,
+      name: "St. Vincent de Paul Center",
+      type: "Food Bank",
+      address: "2123 Valencia St, Los Angeles",
+      phone: "(323) 224-6280",
+      distance: "3.7 mi",
+      beds: "N/A",
+      services: ["Food pantry", "Emergency assistance", "Clothing closet"],
+      hours: "Mon-Fri 9AM-4PM",
+      lat: 34.0736,
+      lng: -118.2186,
+      category: "food"
+    },
+    
+    // NEW COMMUNITY HEALTH CENTERS
+    {
+      id: 13,
+      name: "AltaMed Health Services",
+      type: "Community Health Center",
+      address: "2040 Camfield Ave, Los Angeles",
+      phone: "(323) 728-7300",
+      distance: "5.8 mi",
+      beds: "N/A",
+      services: ["Primary care", "Behavioral health", "Dental", "Pharmacy"],
+      hours: "Mon-Fri 7AM-8PM, Sat 8AM-5PM",
+      lat: 34.0479,
+      lng: -118.1718,
+      category: "health"
+    },
+    {
+      id: 14,
+      name: "Northeast Valley Health Corporation",
+      type: "Community Health Center",
+      address: "11200 Nordhoff St, San Fernando",
+      phone: "(818) 896-8621",
+      distance: "22.1 mi",
+      beds: "N/A",
+      services: ["Medical", "Dental", "Mental health", "WIC program"],
+      hours: "Mon-Fri 7AM-7PM, Sat 8AM-4PM",
+      lat: 34.2394,
+      lng: -118.4398,
+      category: "health"
+    },
+    {
+      id: 15,
+      name: "Venice Family Clinic",
+      type: "Community Health Center",
+      address: "604 Rose Ave, Venice",
+      phone: "(310) 392-8636",
+      distance: "16.3 mi",
+      beds: "N/A",
+      services: ["Primary care", "Mental health", "Homeless services", "Dental"],
+      hours: "Mon-Fri 8AM-6PM, Sat 8AM-12PM",
+      lat: 34.0165,
+      lng: -118.4719,
+      category: "health"
+    }
+  ];
+
   useEffect(() => {
     if (mapRef.current && !mapInstanceRef.current && typeof L !== 'undefined') {
       try {
@@ -920,10 +923,28 @@ const locations = [
 
         // Add markers for each location
         locations.forEach(location => {
-        
-  switch(location.category) {
-  
-          
+          // Define marker style based on category
+          let markerStyle;
+          switch(location.category) {
+            case 'shelter':
+              markerStyle = { color: '#dc2626', icon: '🏠' }; // Red for shelters
+              break;
+            case 'reentry':
+              markerStyle = { color: '#10b981', icon: '👥' }; // Green for reentry
+              break;
+            case 'legal':
+              markerStyle = { color: '#3b82f6', icon: '⚖️' }; // Blue for legal
+              break;
+            case 'food':
+              markerStyle = { color: '#f59e0b', icon: '🍽️' }; // Orange for food
+              break;
+            case 'health':
+              markerStyle = { color: '#8b5cf6', icon: '🏥' }; // Purple for health
+              break;
+            default:
+              markerStyle = { color: '#000000', icon: '📍' }; // Black default
+          }
+
           const markerHtml = `
             <div style="
               width: 40px; 
@@ -957,7 +978,7 @@ const locations = [
               <p style="margin: 0 0 4px 0; color: #666; font-size: 14px; font-weight: bold;">${location.type}</p>
               <p style="margin: 0 0 8px 0; font-size: 12px; color: #888;">${location.address}</p>
               <div style="margin: 8px 0;">
-                <span style="background: ${isReentry ? '#10b981' : '#000'}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px;">
+                <span style="background: ${markerStyle.color}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px;">
                   ${location.distance} away
                 </span>
               </div>
@@ -1139,65 +1160,88 @@ const locations = [
         </h3>
         
         <div style={{ maxHeight: '256px', overflowY: 'auto' }}>
-          {locations.map((location) => (
-            <div 
-              key={location.id}
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'space-between', 
-                padding: '12px', 
-                backgroundColor: '#f5f5f5', 
-                borderRadius: '16px', 
-                border: '1px solid #d1d5db',
-                marginBottom: '12px',
-                cursor: 'pointer'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{ 
-                  width: '40px', 
-                  height: '40px', 
-                  backgroundColor: location.category === 'reentry' ? '#10b981' : 'black', 
-                  borderRadius: '50%', 
+          {locations.map((location) => {
+            // Determine icon and color for list items too
+            let itemStyle;
+            switch(location.category) {
+              case 'shelter':
+                itemStyle = { color: '#dc2626', icon: '🏠' };
+                break;
+              case 'reentry':
+                itemStyle = { color: '#10b981', icon: '👥' };
+                break;
+              case 'legal':
+                itemStyle = { color: '#3b82f6', icon: '⚖️' };
+                break;
+              case 'food':
+                itemStyle = { color: '#f59e0b', icon: '🍽️' };
+                break;
+              case 'health':
+                itemStyle = { color: '#8b5cf6', icon: '🏥' };
+                break;
+              default:
+                itemStyle = { color: '#000000', icon: '📍' };
+            }
+
+            return (
+              <div 
+                key={location.id}
+                style={{ 
                   display: 'flex', 
                   alignItems: 'center', 
-                  justifyContent: 'center',
-                  color: 'white'
-                }}>
-                  {location.category === 'reentry' ? '👥' : '🏠'}
-                </div>
-                <div>
-                  <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>{location.name}</p>
-                  <p style={{ color: 'black', opacity: 0.6, fontSize: '12px', margin: 0 }}>{location.distance} • {location.type}</p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <a 
-                  href={`tel:${location.phone}`}
-                  style={{ 
-                    width: '32px', 
-                    height: '32px', 
-                    backgroundColor: 'black', 
+                  justifyContent: 'space-between', 
+                  padding: '12px', 
+                  backgroundColor: '#f5f5f5', 
+                  borderRadius: '16px', 
+                  border: '1px solid #d1d5db',
+                  marginBottom: '12px',
+                  cursor: 'pointer'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{ 
+                    width: '40px', 
+                    height: '40px', 
+                    backgroundColor: itemStyle.color, 
                     borderRadius: '50%', 
                     display: 'flex', 
                     alignItems: 'center', 
                     justifyContent: 'center',
-                    textDecoration: 'none',
                     color: 'white'
-                  }}
-                >
-                  📞
-                </a>
+                  }}>
+                    {itemStyle.icon}
+                  </div>
+                  <div>
+                    <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: 0 }}>{location.name}</p>
+                    <p style={{ color: 'black', opacity: 0.6, fontSize: '12px', margin: 0 }}>{location.distance} • {location.type}</p>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <a 
+                    href={`tel:${location.phone}`}
+                    style={{ 
+                      width: '32px', 
+                      height: '32px', 
+                      backgroundColor: 'black', 
+                      borderRadius: '50%', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      textDecoration: 'none',
+                      color: 'white'
+                    }}
+                  >
+                    📞
+                  </a>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
   );
 };
-
   const ResourcesScreen = () => (
     <div style={{ minHeight: '100vh', backgroundColor: 'white', paddingBottom: '80px' }}>
       <div style={{ background: 'linear-gradient(to right, #dc2626, #ef4444)', padding: '24px' }}>
